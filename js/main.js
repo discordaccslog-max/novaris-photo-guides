@@ -58,11 +58,26 @@
 
   /* ---------- Sticky header compacts on scroll ---------- */
 
+  /* Also drives the reading progress bar and the back-to-top button. */
+
   var header = document.querySelector(".site-header");
+  var progress = document.querySelector(".progress");
+  var toTop = document.querySelector(".to-top");
   if (header) {
     var ticking = false;
     var update = function () {
-      header.classList.toggle("is-compact", window.scrollY > 24);
+      var y = window.scrollY;
+      header.classList.toggle("is-compact", y > 24);
+      if (progress) {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0) + ")";
+      }
+      if (toTop) {
+        var show = y > 900;
+        toTop.classList.toggle("is-visible", show);
+        toTop.setAttribute("aria-hidden", show ? "false" : "true");
+        toTop.tabIndex = show ? 0 : -1;
+      }
       ticking = false;
     };
     window.addEventListener("scroll", function () {
@@ -98,6 +113,14 @@
     if (!link) return;
     var id = link.getAttribute("href").slice(1);
     if (!id) return;
+    if (id === "top") {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      var brand = document.querySelector(".brand");
+      if (brand) brand.focus({ preventScroll: true });
+      if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+      return;
+    }
     var target = document.getElementById(id);
     if (!target) return;
     event.preventDefault();
@@ -106,5 +129,137 @@
     if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
     target.focus({ preventScroll: true });
   });
+
+  /* ---------- "Inside a guide" tabbed viewer ---------- */
+
+  document.querySelectorAll("[data-tabs]").forEach(function (root) {
+    var tablist = root.querySelector('[role="tablist"]');
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('[role="tabpanel"]'));
+    if (!tablist || !tabs.length) return;
+    tablist.hidden = false;
+
+    function select(index, focus) {
+      tabs.forEach(function (tab, i) {
+        var on = i === index;
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+        if (on && focus) tab.focus();
+      });
+      panels.forEach(function (panel, i) {
+        var on = i === index;
+        panel.setAttribute("data-state", on ? "in" : "out");
+        panel.style.zIndex = on ? "2" : "1";
+        panel.inert = !on;
+        if (on) panel.removeAttribute("aria-hidden");
+        else panel.setAttribute("aria-hidden", "true");
+      });
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { select(i, false); });
+      tab.addEventListener("keydown", function (event) {
+        var next = null;
+        if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (i + 1) % tabs.length;
+        if (event.key === "ArrowUp" || event.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+        if (event.key === "Home") next = 0;
+        if (event.key === "End") next = tabs.length - 1;
+        if (next !== null) {
+          event.preventDefault();
+          select(next, true);
+        }
+      });
+    });
+    select(0, false);
+  });
+
+  /* ---------- Card spotlight follows the pointer ---------- */
+
+  var finePointer = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (finePointer && !reduceMotion) {
+    document.querySelectorAll(".card").forEach(function (card) {
+      card.addEventListener("pointermove", function (event) {
+        var rect = card.getBoundingClientRect();
+        card.style.setProperty("--mx", (event.clientX - rect.left) + "px");
+        card.style.setProperty("--my", (event.clientY - rect.top) + "px");
+      });
+    });
+  }
+
+  /* ---------- Preview lightbox ---------- */
+
+  var pages = document.querySelectorAll(".preview-page");
+  if (pages.length && typeof HTMLDialogElement === "function") {
+    var dialog = document.createElement("dialog");
+    dialog.className = "lightbox";
+    dialog.setAttribute("aria-label", "Enlarged page preview");
+    dialog.innerHTML =
+      '<div class="lightbox-inner">' +
+      '<button class="lightbox-close" type="button" aria-label="Close preview">&times;</button>' +
+      '<div class="lightbox-page"></div>' +
+      '<p class="lightbox-cap"></p>' +
+      "</div>";
+    document.body.appendChild(dialog);
+    var slot = dialog.querySelector(".lightbox-page");
+    var caption = dialog.querySelector(".lightbox-cap");
+    var opener = null;
+
+    dialog.querySelector(".lightbox-close").addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener("close", function () {
+      if (opener) opener.focus();
+    });
+
+    pages.forEach(function (page) {
+      var svg = page.querySelector("svg");
+      if (!svg) return;
+      var titleEl = svg.querySelector("title");
+      var title = titleEl ? titleEl.textContent : "Page preview";
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "preview-open";
+      button.setAttribute("aria-label", "Enlarge preview: " + title);
+      button.innerHTML = '<span aria-hidden="true">Enlarge &#8599;</span>';
+      page.appendChild(button);
+      button.addEventListener("click", function () {
+        var clone = svg.cloneNode(true);
+        clone.querySelectorAll("[id]").forEach(function (n) { n.removeAttribute("id"); });
+        clone.removeAttribute("aria-labelledby");
+        clone.setAttribute("aria-label", title);
+        slot.textContent = "";
+        slot.appendChild(clone);
+        caption.textContent = title;
+        opener = button;
+        dialog.showModal();
+      });
+    });
+  }
+
+  /* ---------- Policy pages: contents list ---------- */
+
+  var toc = document.querySelector("[data-toc]");
+  if (toc) {
+    var wide = window.matchMedia("(min-width: 1001px)");
+    var syncOpen = function () { if (wide.matches) toc.open = true; };
+    syncOpen();
+    if (wide.addEventListener) wide.addEventListener("change", syncOpen);
+
+    var links = {};
+    toc.querySelectorAll("a[href^='#']").forEach(function (a) { links[a.getAttribute("href").slice(1)] = a; });
+    var headings = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    if ("IntersectionObserver" in window && headings.length) {
+      var setActive = function (id) {
+        Object.keys(links).forEach(function (key) { links[key].classList.toggle("is-active", key === id); });
+      };
+      var tocObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      }, { rootMargin: "-20% 0px -70% 0px" });
+      headings.forEach(function (h) { tocObserver.observe(h); });
+    }
+  }
 
 })();

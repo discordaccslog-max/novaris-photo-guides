@@ -26,7 +26,8 @@
 <script src="js/products.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
-<body>
+<body id="top">
+<div class="progress" aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
@@ -45,17 +46,22 @@
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-intro">
       <span class="eyebrow">Photography reference guides &middot; PDF</span>
-      <h1 id="hero-title">Printed references for the shoot in front of you.</h1>
+      <h1 id="hero-title"><span class="line"><span>Printed references</span></span> <span class="line"><span>for the shoot</span></span> <span class="line"><span>in front of you.</span></span></h1>
       <p class="lede">Novaris Photo Guides are downloadable PDFs of shot lists, lighting setup diagrams, posing references, settings charts, and planning worksheets, each organized around one kind of photography. They are reference and planning pages to use while you work, not courses or lessons.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="#guides">Browse the six guides</a>
         <a class="btn btn-ghost" href="#included">What every guide includes</a>
       </div>
-      <p class="hero-note">US Letter and A4 in every purchase &middot; Prices in USD &middot; 14-day refund policy</p>
+      <ul class="hero-specs" aria-label="At a glance">
+        <li><strong>6</strong><span>guides</span></li>
+        <li><strong>2</strong><span>page sizes</span></li>
+        <li><strong>PDF</strong><span>print-ready</span></li>
+        <li><strong>14</strong><span>day refunds</span></li>
+      </ul>
     </div>
-    <svg class="aperture" viewBox="-124 -124 248 248" role="img" aria-labelledby="ap-title">
+    <div class="hero-visual"><svg class="aperture" viewBox="-124 -124 248 248" role="img" aria-labelledby="ap-title">
   <title id="ap-title">Illustration of a lens aperture slowly opening and closing, with warm light behind it</title>
   <defs>
     <radialGradient id="ap-light"><stop offset="0" stop-color="#ffd38a"/><stop offset=".45" stop-color="#e09a2c" stop-opacity=".85"/><stop offset="1" stop-color="#e09a2c" stop-opacity="0"/></radialGradient>
@@ -68,19 +74,27 @@
   <circle class="ap-glow" r="70" fill="url(#ap-light)"/>
   <g clip-path="url(#ap-clip)"><g transform="rotate(0)"><rect class="ap-blade" x="-23.09" y="-240" width="260" height="200" fill="#35312c" stroke="#e09a2c" stroke-opacity=".45" stroke-width="1"/></g><g transform="rotate(60)"><rect class="ap-blade" x="-23.09" y="-240" width="260" height="200" fill="#2d2a26" stroke="#e09a2c" stroke-opacity=".45" stroke-width="1"/></g><g transform="rotate(120)"><rect class="ap-blade" x="-23.09" y="-240" width="260" height="200" fill="#35312c" stroke="#e09a2c" stroke-opacity=".45" stroke-width="1"/></g><g transform="rotate(180)"><rect class="ap-blade" x="-23.09" y="-240" width="260" height="200" fill="#2d2a26" stroke="#e09a2c" stroke-opacity=".45" stroke-width="1"/></g><g transform="rotate(240)"><rect class="ap-blade" x="-23.09" y="-240" width="260" height="200" fill="#35312c" stroke="#e09a2c" stroke-opacity=".45" stroke-width="1"/></g><g transform="rotate(300)"><rect class="ap-blade" x="-23.09" y="-240" width="260" height="200" fill="#2d2a26" stroke="#e09a2c" stroke-opacity=".45" stroke-width="1"/></g></g>
   <circle r="97" fill="none" stroke="#4a443d" stroke-width="2"/>
-</svg>
+</svg></div>
   </div>
 </section>
+
+<div class="filmstrip" role="region" aria-label="Page types across the guides">
+  <div class="film-track">
+    <ul class="film-list"><li class="film-frame"><span class="film-code">01A</span>Shot lists</li><li class="film-frame"><span class="film-code">02A</span>Lighting setup diagrams</li><li class="film-frame"><span class="film-code">03A</span>Posing references</li><li class="film-frame"><span class="film-code">04A</span>Settings charts</li><li class="film-frame"><span class="film-code">05A</span>Planning worksheets</li><li class="film-frame"><span class="film-code">06A</span>Timeline templates</li><li class="film-frame"><span class="film-code">07A</span>Scouting worksheets</li><li class="film-frame"><span class="film-code">08A</span>Gear checklists</li><li class="film-frame"><span class="film-code">09A</span>Client questionnaires</li><li class="film-frame"><span class="film-code">10A</span>Run-of-show sheets</li></ul>
+    <ul class="film-list" aria-hidden="true"><li class="film-frame"><span class="film-code">01A</span>Shot lists</li><li class="film-frame"><span class="film-code">02A</span>Lighting setup diagrams</li><li class="film-frame"><span class="film-code">03A</span>Posing references</li><li class="film-frame"><span class="film-code">04A</span>Settings charts</li><li class="film-frame"><span class="film-code">05A</span>Planning worksheets</li><li class="film-frame"><span class="film-code">06A</span>Timeline templates</li><li class="film-frame"><span class="film-code">07A</span>Scouting worksheets</li><li class="film-frame"><span class="film-code">08A</span>Gear checklists</li><li class="film-frame"><span class="film-code">09A</span>Client questionnaires</li><li class="film-frame"><span class="film-code">10A</span>Run-of-show sheets</li></ul>
+  </div>
+</div>
 
 <section class="section section-alt" id="guides" aria-labelledby="guides-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">The guides</span>
+      <span class="eyebrow"><span class="eyebrow-num">01</span>The guides</span>
       <h2 id="guides-title">Six guides, one for each kind of work</h2>
       <p>Each guide collects the reference pages for one kind of photography in a single PDF. Open any guide to see its full contents, preview illustrations of representative pages, and who it suits before you buy.</p>
     </div>
     <div class="card-grid">
       <article class="card reveal" style="--stagger:0" data-product="portrait-session-guide">
+        <span class="card-glow" aria-hidden="true"><span></span></span>
         <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="36" height="38" rx="3"/><circle cx="24" cy="20" r="7"/><path d="M12 39c2-7 7-10 12-10s10 3 12 10"/></svg>
         <h3><a href="portrait-session-guide.html">Portrait Session Guide</a></h3>
         <p>Shot lists by session type, posing reference diagrams, natural-light and one- or two-light setups, and client session planning sheets.</p>
@@ -90,6 +104,7 @@
         </div>
       </article>
       <article class="card reveal" style="--stagger:1" data-product="wedding-day-guide">
+        <span class="card-glow" aria-hidden="true"><span></span></span>
         <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="18" cy="27" r="11"/><circle cx="30" cy="27" r="11"/><path d="M20 9l4-4 4 4-4 4z"/></svg>
         <h3><a href="wedding-day-guide.html">Wedding Day Guide</a></h3>
         <p>Full-day timeline templates, shot lists by phase, a family formals grouping planner, a venue scouting worksheet, a gear checklist, and a client questionnaire.</p>
@@ -99,6 +114,7 @@
         </div>
       </article>
       <article class="card reveal" style="--stagger:2" data-product="product-photography-guide">
+        <span class="card-glow" aria-hidden="true"><span></span></span>
         <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 40h40"/><path d="M4 40c0-14 4-22 4-34"/><rect x="20" y="20" width="10" height="20" rx="2"/><path d="M23 20v-5h4v5"/><path d="M36 8l-6 8M40 14l-7 5M31 5l-3 9"/></svg>
         <h3><a href="product-photography-guide.html">Product Photography Guide</a></h3>
         <p>Tabletop lighting setups, background and surface reference, shot lists for standard e-commerce angles, and settings charts for common scenarios.</p>
@@ -108,6 +124,7 @@
         </div>
       </article>
       <article class="card reveal" style="--stagger:3" data-product="landscape-travel-field-guide">
+        <span class="card-glow" aria-hidden="true"><span></span></span>
         <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="33" cy="14" r="5"/><path d="M3 40l13-18 9 12 6-7 14 13z"/><path d="M3 44h42"/></svg>
         <h3><a href="landscape-travel-field-guide.html">Landscape &amp; Travel Field Guide</a></h3>
         <p>Location scouting worksheets, sunrise and sunset planning sheets, composition reference, field settings charts, and a gear checklist, plus a pocket format for a camera bag.</p>
@@ -117,6 +134,7 @@
         </div>
       </article>
       <article class="card reveal" style="--stagger:4" data-product="event-coverage-guide">
+        <span class="card-glow" aria-hidden="true"><span></span></span>
         <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l8 6"/><rect x="4" y="2" width="8" height="7" rx="1.5" transform="rotate(36 8 6)"/><path d="M16 12l-6 30h28L30 26z" stroke-dasharray="2 3"/><path d="M6 44h36"/><circle cx="27" cy="34" r="3"/><path d="M22 44c0-4 2-6 5-6s5 2 5 6"/></svg>
         <h3><a href="event-coverage-guide.html">Event Coverage Guide</a></h3>
         <p>Shot lists for corporate events, parties, and conferences, low-light settings reference, flash setups, and run-of-show planning sheets.</p>
@@ -126,6 +144,7 @@
         </div>
       </article>
       <article class="card reveal card-featured" style="--stagger:5" data-product="complete-reference-library">
+        <span class="card-glow" aria-hidden="true"><span></span></span>
         <span class="card-tag">All five guides</span>
         <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="14" y="4" width="26" height="34" rx="2"/><path d="M10 9v32a2 2 0 0 0 2 2h24"/><path d="M6 14v31a2 2 0 0 0 2 2h22" opacity=".6"/><path d="M20 13h14M20 19h14M20 25h9"/></svg>
         <h3><a href="complete-reference-library.html">Complete Reference Library</a></h3>
@@ -139,10 +158,92 @@
   </div>
 </section>
 
+<section class="section showcase-section" id="inside" aria-labelledby="inside-title">
+  <div class="wrap showcase" data-tabs>
+    <div class="showcase-copy reveal">
+      <span class="eyebrow"><span class="eyebrow-num">02</span>Inside a guide</span>
+      <h2 id="inside-title">The pages you'll print</h2>
+      <p class="muted">Every guide is built from a small set of page types. Choose one to see an illustration of its layout, and select a page to enlarge it.</p>
+      <div class="tabs" role="tablist" aria-label="Page types" hidden>
+        <button class="tab" type="button" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true" tabindex="0">
+          <span class="tab-num">01</span>
+          <span class="tab-text"><strong>Lighting diagrams</strong><span>Top-down setups that mark the subject, camera, lights, modifiers, and reflectors, with placement notes.</span></span>
+        </button>
+        <button class="tab" type="button" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1">
+          <span class="tab-num">02</span>
+          <span class="tab-text"><strong>Shot lists</strong><span>Checklists organized by session type or by phase of the day, with room for additions on the job.</span></span>
+        </button>
+        <button class="tab" type="button" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">
+          <span class="tab-num">03</span>
+          <span class="tab-text"><strong>Planning worksheets</strong><span>Sheets to fill in by hand before a session or shoot: times, locations, people, and must-have shots.</span></span>
+        </button>
+        <button class="tab" type="button" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">
+          <span class="tab-num">04</span>
+          <span class="tab-text"><strong>Settings charts</strong><span>Starting-point settings for common situations, with space to record your own adjustments.</span></span>
+        </button>
+      </div>
+    </div>
+    <div class="stage reveal">
+      <figure class="panel" role="tabpanel" id="panel-0" aria-labelledby="tab-0" data-panel="0">
+        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-1-t pv-1-d" font-family="Inter, system-ui, sans-serif">
+<title id="pv-1-t">Two-light portrait: key and fill</title><desc id="pv-1-d">Top-down diagram with a backdrop at the top, the subject in the center, a softbox key light at 45 degrees to camera left, a reflector for fill on the right, and the camera at the bottom, followed by placement notes.</desc>
+<rect width="300" height="388" fill="#fbf8f2"/>
+<rect x="20" y="20" width="4" height="26" fill="#c77d16"/>
+<text x="32" y="30" font-size="7" letter-spacing="1.4" fill="#6b645a">LIGHTING SETUPS</text>
+<text x="32" y="44" font-size="12.5" font-weight="600" fill="#1f1d1a" font-family="Fraunces, Georgia, serif">Two-light portrait: key and fill</text>
+<rect x="20" y="58" width="260" height="190" rx="4" fill="#efe7d8"/><line x1="40" y1="58" x2="40" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="60" y1="58" x2="60" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="80" y1="58" x2="80" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="100" y1="58" x2="100" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="120" y1="58" x2="120" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="140" y1="58" x2="140" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="160" y1="58" x2="160" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="180" y1="58" x2="180" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="200" y1="58" x2="200" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="220" y1="58" x2="220" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="240" y1="58" x2="240" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="260" y1="58" x2="260" y2="248" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="78" x2="280" y2="78" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="98" x2="280" y2="98" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="118" x2="280" y2="118" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="138" x2="280" y2="138" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="158" x2="280" y2="158" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="178" x2="280" y2="178" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="198" x2="280" y2="198" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="218" x2="280" y2="218" stroke="#e3d9c6" stroke-width=".6"/><line x1="20" y1="238" x2="280" y2="238" stroke="#e3d9c6" stroke-width=".6"/><path d="M90 86 Q150 72 210 86" fill="none" stroke="#6b645a" stroke-width="5" stroke-linecap="round"/><text x="150" y="102" font-size="7.5" text-anchor="middle" fill="#1f1d1a" font-weight="600">Backdrop</text><circle cx="150" cy="140" r="11" fill="#1f1d1a"/><circle cx="150" cy="136" r="4" fill="#fbf8f2"/><text x="150" y="166" font-size="7.5" text-anchor="middle" fill="#1f1d1a" font-weight="600">Subject</text><g transform="translate(80 170) rotate(-135)"><path d="M-16 -4 L16 -4 L9 8 L-9 8 Z" fill="#c77d16"/><rect x="-16" y="-6" width="32" height="3" fill="#1f1d1a"/></g><text x="70" y="196" font-size="7.5" text-anchor="middle" fill="#1f1d1a" font-weight="600">Key — softbox</text><line x1="90" y1="162" x2="140" y2="146" stroke="#c77d16" stroke-width="1" stroke-dasharray="4 3"/><g transform="translate(222 168) rotate(125)"><path d="M-15 0 Q0 -8 15 0" fill="none" stroke="#6b645a" stroke-width="3" stroke-linecap="round"/></g><text x="226" y="192" font-size="7.5" text-anchor="middle" fill="#1f1d1a" font-weight="600">Fill — reflector</text><g transform="translate(150 226) rotate(0)"><rect x="-11" y="-7" width="22" height="14" rx="2" fill="#1f1d1a"/><rect x="-5" y="-13" width="10" height="7" fill="#1f1d1a"/></g><text x="196" y="230" font-size="7.5" text-anchor="middle" fill="#1f1d1a" font-weight="600">Camera</text><text x="20" y="268" font-size="7" letter-spacing="1.2" fill="#6b645a">NOTES</text><circle cx="24" cy="282" r="2" fill="#c77d16"/><text x="32" y="285" font-size="8" fill="#1f1d1a">Key: 45° camera left, slightly above eye line</text><circle cx="24" cy="298" r="2" fill="#c77d16"/><text x="32" y="301" font-size="8" fill="#1f1d1a">Fill: opposite side, close enough to soften shadow</text><circle cx="24" cy="314" r="2" fill="#c77d16"/><text x="32" y="317" font-size="8" fill="#1f1d1a">Backdrop: leave space to avoid spill</text><line x1="20" y1="334" x2="280" y2="334" stroke="#d9cfbe" stroke-width="1"/><line x1="20" y1="348" x2="280" y2="348" stroke="#d9cfbe" stroke-width="1"/>
+<line x1="20" y1="366" x2="280" y2="366" stroke="#d9cfbe"/>
+<text x="20" y="377" font-size="6.5" fill="#6b645a">Novaris Photo Guides</text>
+</svg></div>
+        <figcaption>Lighting diagrams &middot; from the <a href="portrait-session-guide.html">Portrait Session Guide</a></figcaption>
+      </figure>
+      <figure class="panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1" data-panel="1">
+        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-2-t pv-2-d" font-family="Inter, system-ui, sans-serif">
+<title id="pv-2-t">Shot list: ceremony</title><desc id="pv-2-d">A ceremony shot list with a position column and checkboxes, listing shots from the empty venue through the processional, vows, rings, kiss, and recessional.</desc>
+<rect width="300" height="388" fill="#fbf8f2"/>
+<rect x="20" y="20" width="4" height="26" fill="#c77d16"/>
+<text x="32" y="30" font-size="7" letter-spacing="1.4" fill="#6b645a">SHOT LISTS BY PHASE</text>
+<text x="32" y="44" font-size="12.5" font-weight="600" fill="#1f1d1a" font-family="Fraunces, Georgia, serif">Shot list: ceremony</text>
+<rect x="20" y="60" width="260" height="18" fill="#1f1d1a"/><text x="28" y="72" font-size="7" fill="#fbf8f2" letter-spacing="1">SHOT</text><text x="196" y="72" font-size="7" fill="#fbf8f2" letter-spacing="1">POSITION</text><text x="270" y="72" font-size="7" fill="#fbf8f2" text-anchor="end" letter-spacing="1">DONE</text><rect x="20" y="78" width="260" height="24" fill="#efe7d8"/><text x="28" y="93" font-size="8" fill="#1f1d1a">Venue before guests arrive</text><text x="196" y="93" font-size="7.5" fill="#6b645a">Back</text><rect x="260" y="85" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><text x="28" y="117" font-size="8" fill="#1f1d1a">Guests arriving</text><text x="196" y="117" font-size="7.5" fill="#6b645a">Entrance</text><rect x="260" y="109" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><rect x="20" y="126" width="260" height="24" fill="#efe7d8"/><text x="28" y="141" font-size="8" fill="#1f1d1a">Partner waiting at the front</text><text x="196" y="141" font-size="7.5" fill="#6b645a">Aisle</text><rect x="260" y="133" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><text x="28" y="165" font-size="8" fill="#1f1d1a">Processional</text><text x="196" y="165" font-size="7.5" fill="#6b645a">Aisle</text><rect x="260" y="157" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><rect x="20" y="174" width="260" height="24" fill="#efe7d8"/><text x="28" y="189" font-size="8" fill="#1f1d1a">Reactions at first sight</text><text x="196" y="189" font-size="7.5" fill="#6b645a">Front side</text><rect x="260" y="181" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><text x="28" y="213" font-size="8" fill="#1f1d1a">Vows, wide and tight</text><text x="196" y="213" font-size="7.5" fill="#6b645a">Side</text><rect x="260" y="205" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><rect x="20" y="222" width="260" height="24" fill="#efe7d8"/><text x="28" y="237" font-size="8" fill="#1f1d1a">Ring exchange</text><text x="196" y="237" font-size="7.5" fill="#6b645a">Side</text><rect x="260" y="229" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><text x="28" y="261" font-size="8" fill="#1f1d1a">First kiss</text><text x="196" y="261" font-size="7.5" fill="#6b645a">Aisle</text><rect x="260" y="253" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><rect x="20" y="270" width="260" height="24" fill="#efe7d8"/><text x="28" y="285" font-size="8" fill="#1f1d1a">Recessional</text><text x="196" y="285" font-size="7.5" fill="#6b645a">Aisle</text><rect x="260" y="277" width="10" height="10" rx="1.5" fill="none" stroke="#1f1d1a" stroke-width="1"/><text x="20" y="310" font-size="7" letter-spacing="1.2" fill="#6b645a">ADDED ON THE DAY</text><line x1="20" y1="324" x2="280" y2="324" stroke="#d9cfbe" stroke-width="1"/><line x1="20" y1="338" x2="280" y2="338" stroke="#d9cfbe" stroke-width="1"/><line x1="20" y1="352" x2="280" y2="352" stroke="#d9cfbe" stroke-width="1"/>
+<line x1="20" y1="366" x2="280" y2="366" stroke="#d9cfbe"/>
+<text x="20" y="377" font-size="6.5" fill="#6b645a">Novaris Photo Guides</text>
+</svg></div>
+        <figcaption>Shot lists &middot; from the <a href="wedding-day-guide.html">Wedding Day Guide</a></figcaption>
+      </figure>
+      <figure class="panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" data-panel="2">
+        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-3-t pv-3-d" font-family="Inter, system-ui, sans-serif">
+<title id="pv-3-t">Sunrise and sunset planning sheet</title><desc id="pv-3-d">A planning sheet with fields for location, date, sunrise, sunset, golden hour and blue hour times, a compass diagram with sunrise and sunset directions marked, fields for bearings, weather and arrival time, and lines for composition ideas.</desc>
+<rect width="300" height="388" fill="#fbf8f2"/>
+<rect x="20" y="20" width="4" height="26" fill="#c77d16"/>
+<text x="32" y="30" font-size="7" letter-spacing="1.4" fill="#6b645a">SUNRISE AND SUNSET PLANNING</text>
+<text x="32" y="44" font-size="12.5" font-weight="600" fill="#1f1d1a" font-family="Fraunces, Georgia, serif">Sunrise and sunset planning sheet</text>
+<text x="20" y="70" font-size="6.8" letter-spacing="1" fill="#6b645a">LOCATION</text><line x1="20" y1="84" x2="144" y2="84" stroke="#1f1d1a" stroke-width=".8"/><text x="156" y="70" font-size="6.8" letter-spacing="1" fill="#6b645a">DATE</text><line x1="156" y1="84" x2="280" y2="84" stroke="#1f1d1a" stroke-width=".8"/><text x="20" y="100" font-size="6.8" letter-spacing="1" fill="#6b645a">SUNRISE</text><line x1="20" y1="114" x2="144" y2="114" stroke="#1f1d1a" stroke-width=".8"/><text x="156" y="100" font-size="6.8" letter-spacing="1" fill="#6b645a">SUNSET</text><line x1="156" y1="114" x2="280" y2="114" stroke="#1f1d1a" stroke-width=".8"/><text x="20" y="130" font-size="6.8" letter-spacing="1" fill="#6b645a">GOLDEN HOUR (AM)</text><line x1="20" y1="144" x2="144" y2="144" stroke="#1f1d1a" stroke-width=".8"/><text x="156" y="130" font-size="6.8" letter-spacing="1" fill="#6b645a">GOLDEN HOUR (PM)</text><line x1="156" y1="144" x2="280" y2="144" stroke="#1f1d1a" stroke-width=".8"/><text x="20" y="160" font-size="6.8" letter-spacing="1" fill="#6b645a">BLUE HOUR (AM)</text><line x1="20" y1="174" x2="144" y2="174" stroke="#1f1d1a" stroke-width=".8"/><text x="156" y="160" font-size="6.8" letter-spacing="1" fill="#6b645a">BLUE HOUR (PM)</text><line x1="156" y1="174" x2="280" y2="174" stroke="#1f1d1a" stroke-width=".8"/><text x="20" y="196" font-size="7" letter-spacing="1.2" fill="#6b645a">SUN DIRECTION</text><circle cx="86" cy="262" r="48" fill="#efe7d8" stroke="#1f1d1a" stroke-width=".8"/><line x1="86.0" y1="214.0" x2="86.0" y2="222.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="98.4" y1="215.6" x2="97.4" y2="219.5" stroke="#1f1d1a" stroke-width=".8"/><line x1="110.0" y1="220.4" x2="108.0" y2="223.9" stroke="#1f1d1a" stroke-width=".8"/><line x1="119.9" y1="228.1" x2="117.1" y2="230.9" stroke="#1f1d1a" stroke-width=".8"/><line x1="127.6" y1="238.0" x2="124.1" y2="240.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="132.4" y1="249.6" x2="128.5" y2="250.6" stroke="#1f1d1a" stroke-width=".8"/><line x1="134.0" y1="262.0" x2="126.0" y2="262.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="132.4" y1="274.4" x2="128.5" y2="273.4" stroke="#1f1d1a" stroke-width=".8"/><line x1="127.6" y1="286.0" x2="124.1" y2="284.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="119.9" y1="295.9" x2="117.1" y2="293.1" stroke="#1f1d1a" stroke-width=".8"/><line x1="110.0" y1="303.6" x2="108.0" y2="300.1" stroke="#1f1d1a" stroke-width=".8"/><line x1="98.4" y1="308.4" x2="97.4" y2="304.5" stroke="#1f1d1a" stroke-width=".8"/><line x1="86.0" y1="310.0" x2="86.0" y2="302.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="73.6" y1="308.4" x2="74.6" y2="304.5" stroke="#1f1d1a" stroke-width=".8"/><line x1="62.0" y1="303.6" x2="64.0" y2="300.1" stroke="#1f1d1a" stroke-width=".8"/><line x1="52.1" y1="295.9" x2="54.9" y2="293.1" stroke="#1f1d1a" stroke-width=".8"/><line x1="44.4" y1="286.0" x2="47.9" y2="284.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="39.6" y1="274.4" x2="43.5" y2="273.4" stroke="#1f1d1a" stroke-width=".8"/><line x1="38.0" y1="262.0" x2="46.0" y2="262.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="39.6" y1="249.6" x2="43.5" y2="250.6" stroke="#1f1d1a" stroke-width=".8"/><line x1="44.4" y1="238.0" x2="47.9" y2="240.0" stroke="#1f1d1a" stroke-width=".8"/><line x1="52.1" y1="228.1" x2="54.9" y2="230.9" stroke="#1f1d1a" stroke-width=".8"/><line x1="62.0" y1="220.4" x2="64.0" y2="223.9" stroke="#1f1d1a" stroke-width=".8"/><line x1="73.6" y1="215.6" x2="74.6" y2="219.5" stroke="#1f1d1a" stroke-width=".8"/><text x="86.0" y="208.0" font-size="7.5" font-weight="600" text-anchor="middle" fill="#1f1d1a">N</text><text x="143.0" y="265.0" font-size="7.5" font-weight="600" text-anchor="middle" fill="#1f1d1a">E</text><text x="86.0" y="322.0" font-size="7.5" font-weight="600" text-anchor="middle" fill="#1f1d1a">S</text><text x="29.0" y="265.0" font-size="7.5" font-weight="600" text-anchor="middle" fill="#1f1d1a">W</text><path d="M86 262 L124 237" stroke="#c77d16" stroke-width="1.6"/><circle cx="124" cy="237" r="5" fill="#c77d16"/><path d="M86 262 L46 240" stroke="#6b645a" stroke-width="1.2" stroke-dasharray="3 2"/><circle cx="46" cy="240" r="4" fill="none" stroke="#6b645a" stroke-width="1.2"/><circle cx="86" cy="262" r="2.5" fill="#1f1d1a"/><text x="166" y="204" font-size="7" fill="#1f1d1a" font-weight="600">Sunrise bearing</text><line x1="166" y1="216" x2="280" y2="216" stroke="#1f1d1a" stroke-width=".8"/><text x="166" y="234" font-size="7" fill="#1f1d1a" font-weight="600">Sunset bearing</text><line x1="166" y1="246" x2="280" y2="246" stroke="#1f1d1a" stroke-width=".8"/><text x="166" y="264" font-size="7" fill="#1f1d1a" font-weight="600">Cloud and weather</text><line x1="166" y1="276" x2="280" y2="276" stroke="#d9cfbe" stroke-width="1"/><line x1="166" y1="288" x2="280" y2="288" stroke="#d9cfbe" stroke-width="1"/><text x="166" y="308" font-size="7" fill="#1f1d1a" font-weight="600">Arrive by</text><line x1="166" y1="320" x2="280" y2="320" stroke="#1f1d1a" stroke-width=".8"/><text x="20" y="340" font-size="7" letter-spacing="1.2" fill="#6b645a">COMPOSITION IDEAS</text><line x1="20" y1="354" x2="280" y2="354" stroke="#d9cfbe" stroke-width="1"/>
+<line x1="20" y1="366" x2="280" y2="366" stroke="#d9cfbe"/>
+<text x="20" y="377" font-size="6.5" fill="#6b645a">Novaris Photo Guides</text>
+</svg></div>
+        <figcaption>Planning worksheets &middot; from the <a href="landscape-travel-field-guide.html">Landscape &amp; Travel Field Guide</a></figcaption>
+      </figure>
+      <figure class="panel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" data-panel="3">
+        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-4-t pv-4-d" font-family="Inter, system-ui, sans-serif">
+<title id="pv-4-t">Settings: common scenarios</title><desc id="pv-4-d">A chart listing tabletop scenarios with starting aperture, shutter speed, and ISO for each, a reminder that values are starting points, and lines for your own adjustments.</desc>
+<rect width="300" height="388" fill="#fbf8f2"/>
+<rect x="20" y="20" width="4" height="26" fill="#c77d16"/>
+<text x="32" y="30" font-size="7" letter-spacing="1.4" fill="#6b645a">SETTINGS REFERENCE</text>
+<text x="32" y="44" font-size="12.5" font-weight="600" fill="#1f1d1a" font-family="Fraunces, Georgia, serif">Settings: common scenarios</text>
+<rect x="20" y="60" width="260" height="20" fill="#1f1d1a"/><text x="26" y="73" font-size="6.8" fill="#fbf8f2" letter-spacing=".8">SCENARIO</text><text x="130" y="73" font-size="6.8" fill="#fbf8f2" letter-spacing=".8">APERTURE</text><text x="182" y="73" font-size="6.8" fill="#fbf8f2" letter-spacing=".8">SHUTTER</text><text x="234" y="73" font-size="6.8" fill="#fbf8f2" letter-spacing=".8">ISO</text><rect x="20" y="80" width="260" height="26" fill="#efe7d8"/><text x="26" y="96" font-size="7.6" fill="#1f1d1a" font-weight="600">White sweep</text><text x="130" y="96" font-size="7.4" fill="#6b645a" >f/8–f/11</text><text x="182" y="96" font-size="7.4" fill="#6b645a" >1/125</text><text x="234" y="96" font-size="7.4" fill="#6b645a" >100</text><text x="26" y="122" font-size="7.6" fill="#1f1d1a" font-weight="600">Reflective item</text><text x="130" y="122" font-size="7.4" fill="#6b645a" >f/8</text><text x="182" y="122" font-size="7.4" fill="#6b645a" >1/125</text><text x="234" y="122" font-size="7.4" fill="#6b645a" >100</text><rect x="20" y="132" width="260" height="26" fill="#efe7d8"/><text x="26" y="148" font-size="7.6" fill="#1f1d1a" font-weight="600">Flat lay</text><text x="130" y="148" font-size="7.4" fill="#6b645a" >f/5.6–f/8</text><text x="182" y="148" font-size="7.4" fill="#6b645a" >1/125</text><text x="234" y="148" font-size="7.4" fill="#6b645a" >100</text><text x="26" y="174" font-size="7.6" fill="#1f1d1a" font-weight="600">Small detail</text><text x="130" y="174" font-size="7.4" fill="#6b645a" >f/11–f/16</text><text x="182" y="174" font-size="7.4" fill="#6b645a" >1/125</text><text x="234" y="174" font-size="7.4" fill="#6b645a" >100–200</text><rect x="20" y="184" width="260" height="26" fill="#efe7d8"/><text x="26" y="200" font-size="7.6" fill="#1f1d1a" font-weight="600">Continuous light</text><text x="130" y="200" font-size="7.4" fill="#6b645a" >f/8</text><text x="182" y="200" font-size="7.4" fill="#6b645a" >1/60</text><text x="234" y="200" font-size="7.4" fill="#6b645a" >200–400</text><text x="26" y="226" font-size="7.6" fill="#1f1d1a" font-weight="600">Dark product</text><text x="130" y="226" font-size="7.4" fill="#6b645a" >f/8</text><text x="182" y="226" font-size="7.4" fill="#6b645a" >1/125</text><text x="234" y="226" font-size="7.4" fill="#6b645a" >100</text><rect x="20" y="254" width="260" height="34" rx="3" fill="none" stroke="#c77d16" stroke-width="1"/><text x="28" y="268" font-size="7.2" fill="#1f1d1a">Starting points with a tripod and controlled light.</text><text x="28" y="280" font-size="7.2" fill="#1f1d1a">Adjust for your light output, distance, and lens.</text><text x="20" y="306" font-size="7" letter-spacing="1.2" fill="#6b645a">MY ADJUSTMENTS</text><line x1="20" y1="320" x2="280" y2="320" stroke="#d9cfbe" stroke-width="1"/><line x1="20" y1="334" x2="280" y2="334" stroke="#d9cfbe" stroke-width="1"/><line x1="20" y1="348" x2="280" y2="348" stroke="#d9cfbe" stroke-width="1"/>
+<line x1="20" y1="366" x2="280" y2="366" stroke="#d9cfbe"/>
+<text x="20" y="377" font-size="6.5" fill="#6b645a">Novaris Photo Guides</text>
+</svg></div>
+        <figcaption>Settings charts &middot; from the <a href="product-photography-guide.html">Product Photography Guide</a></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="included" aria-labelledby="included-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Included in every guide</span>
+      <span class="eyebrow"><span class="eyebrow-num">03</span>Included in every guide</span>
       <h2 id="included-title">What you get with each guide</h2>
       <p>Every guide follows the same format, so the pages work the same way whichever guide you open.</p>
     </div>
@@ -177,7 +278,7 @@
 <section class="section section-dark" id="how-it-works" aria-labelledby="how-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Purchase and delivery</span>
+      <span class="eyebrow"><span class="eyebrow-num">04</span>Purchase and delivery</span>
       <h2 id="how-title">How buying a guide works</h2>
       <p>Everything is digital. There is no account to create and nothing is shipped.</p>
     </div>
@@ -194,7 +295,7 @@
 <section class="section" id="faq-preview" aria-labelledby="faq-title">
   <div class="wrap narrow">
     <div class="section-head reveal">
-      <span class="eyebrow">Questions</span>
+      <span class="eyebrow"><span class="eyebrow-num">05</span>Questions</span>
       <h2 id="faq-title">Common questions</h2>
     </div>
     <div class="faq-list reveal">
@@ -219,6 +320,7 @@
   </div>
 </section>
 </main>
+<a class="to-top" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">Back to top</span></a>
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
@@ -227,6 +329,17 @@
         <p>Printable PDF reference guides for photographers: shot lists, lighting diagrams, posing references, settings charts, and planning worksheets.</p>
         <p>Support: <a href="mailto:novarissupportmails@gmail.com">novarissupportmails@gmail.com</a></p>
       </div>
+      <nav aria-label="Guides">
+        <p class="footer-heading">Guides</p>
+        <ul class="footer-links footer-links-single">
+          <li><a href="portrait-session-guide.html">Portrait Session Guide</a></li>
+          <li><a href="wedding-day-guide.html">Wedding Day Guide</a></li>
+          <li><a href="product-photography-guide.html">Product Photography Guide</a></li>
+          <li><a href="landscape-travel-field-guide.html">Landscape &amp; Travel Field Guide</a></li>
+          <li><a href="event-coverage-guide.html">Event Coverage Guide</a></li>
+          <li><a href="complete-reference-library.html">Complete Reference Library</a></li>
+        </ul>
+      </nav>
       <div class="footer-cols">
         <nav aria-label="Policies and help">
           <p class="footer-heading">Policies and help</p>
@@ -237,10 +350,13 @@
             <li><a href="delivery.html">Delivery</a></li>
             <li><a href="disclaimer.html">Disclaimer</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="about.html">About</a></li>
           </ul>
         </nav>
       </div>
     </div>
+    <p class="footer-mark" aria-hidden="true">Novaris</p>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Novaris Photo Guides. All rights reserved.</p>
       <p>Prices in USD. Applicable taxes are calculated at checkout.</p>

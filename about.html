@@ -26,7 +26,8 @@
 <script src="js/products.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
-<body>
+<body id="top">
+<div class="progress" aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
@@ -49,18 +50,31 @@
     <h1>About Novaris Photo Guides</h1>
     <p class="lede">We make printable reference guides for photographers. Each one gathers the shot lists, diagrams, charts, and worksheets for one kind of photography into a single PDF.</p>
   </header>
+  <div class="prose-layout">
+    <details class="toc" data-toc>
+      <summary>On this page</summary>
+      <p class="toc-title" aria-hidden="true">On this page</p>
+      <ol>
+        <li><a href="#what-we-make">What we make</a></li>
+        <li><a href="#why-reference-pages">Why reference pages</a></li>
+        <li><a href="#how-the-guides-are-put-together">How the guides are put together</a></li>
+        <li><a href="#what-the-guides-are-not">What the guides are not</a></li>
+        <li><a href="#how-we-sell">How we sell</a></li>
+        <li><a href="#get-in-touch">Get in touch</a></li>
+      </ol>
+    </details>
   <div class="prose">
     
 
-    <h2>What we make</h2>
+    <h2 id="what-we-make">What we make</h2>
     <p>Novaris Photo Guides sells six downloadable PDFs: five guides, each covering one kind of photography, and a library that includes all five. The guides cover <a href="portrait-session-guide.html">portrait sessions</a>, <a href="wedding-day-guide.html">wedding days</a>, <a href="product-photography-guide.html">product photography</a>, <a href="landscape-travel-field-guide.html">landscape and travel</a>, and <a href="event-coverage-guide.html">event coverage</a>.</p>
     <p>Inside each guide are the kinds of pages a photographer reaches for while planning or working: shot lists, lighting setup diagrams, posing references, settings reference charts, and planning worksheets. Which page types appear depends on the kind of photography. A wedding guide needs a timeline and a family formals planner; a landscape guide needs sunrise and sunset planning sheets. Each guide's page lists exactly what it contains.</p>
 
-    <h2>Why reference pages</h2>
+    <h2 id="why-reference-pages">Why reference pages</h2>
     <p>Much of the work around a shoot is remembering things: which shots a client asked for, where a light went last time, what time the sun clears the ridge, which family groups come after the ceremony. That information tends to live in scattered notes, screenshots, and memory.</p>
     <p>We think it's easier to work from a printed page. A shot list on a clipboard can be checked off without unlocking a phone. A lighting diagram taped beside a tabletop is there when you need it. A planning sheet filled in before a session becomes the plan for the session. The guides exist to put those pages in one place, in a consistent layout, ready to print.</p>
 
-    <h2>How the guides are put together</h2>
+    <h2 id="how-the-guides-are-put-together">How the guides are put together</h2>
     <ul>
       <li><strong>One kind of photography per guide.</strong> Each guide stays focused, so you print only what applies to the job.</li>
       <li><strong>Both paper sizes.</strong> Every guide comes as a US Letter PDF and an A4 PDF.</li>
@@ -69,19 +83,21 @@
       <li><strong>Starting points, not rules.</strong> Settings and setups are written as places to begin. Light, gear, and subjects vary, and you adjust from there.</li>
     </ul>
 
-    <h2>What the guides are not</h2>
+    <h2 id="what-the-guides-are-not">What the guides are not</h2>
     <p>The guides are reference and planning material. They aren't courses, video lessons, coaching, or critique, and they don't include feedback on anyone's photographs. If you're looking for instruction, these guides aren't designed to provide it. The <a href="disclaimer.html">Disclaimer</a> covers this in more detail.</p>
 
-    <h2>How we sell</h2>
+    <h2 id="how-we-sell">How we sell</h2>
     <p>Prices are listed in US dollars on each guide's page, and applicable taxes are calculated at checkout. Payment is handled by a third-party payment provider, so we never see your full card details. A download link arrives by email immediately after payment. If a guide isn't right for you, you can ask for a full refund within 14 days, with no reason required.</p>
     <p>This website uses no cookies, no analytics, and no advertising trackers. The <a href="privacy.html">Privacy Policy</a> explains what information we receive when you buy and how we use it.</p>
 
-    <h2>Get in touch</h2>
+    <h2 id="get-in-touch">Get in touch</h2>
     <p>Questions about a guide or an order go to <a href="mailto:novarissupportmails@gmail.com">novarissupportmails@gmail.com</a>. We reply within two business days. More on the <a href="contact.html">Contact</a> page.</p>
+  </div>
   </div>
 </div>
 <div class="section" aria-hidden="true" style="padding-top:0"></div>
 </main>
+<a class="to-top" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">Back to top</span></a>
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
@@ -90,6 +106,17 @@
         <p>Printable PDF reference guides for photographers: shot lists, lighting diagrams, posing references, settings charts, and planning worksheets.</p>
         <p>Support: <a href="mailto:novarissupportmails@gmail.com">novarissupportmails@gmail.com</a></p>
       </div>
+      <nav aria-label="Guides">
+        <p class="footer-heading">Guides</p>
+        <ul class="footer-links footer-links-single">
+          <li><a href="portrait-session-guide.html">Portrait Session Guide</a></li>
+          <li><a href="wedding-day-guide.html">Wedding Day Guide</a></li>
+          <li><a href="product-photography-guide.html">Product Photography Guide</a></li>
+          <li><a href="landscape-travel-field-guide.html">Landscape &amp; Travel Field Guide</a></li>
+          <li><a href="event-coverage-guide.html">Event Coverage Guide</a></li>
+          <li><a href="complete-reference-library.html">Complete Reference Library</a></li>
+        </ul>
+      </nav>
       <div class="footer-cols">
         <nav aria-label="Policies and help">
           <p class="footer-heading">Policies and help</p>
@@ -100,10 +127,13 @@
             <li><a href="delivery.html">Delivery</a></li>
             <li><a href="disclaimer.html">Disclaimer</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="about.html">About</a></li>
           </ul>
         </nav>
       </div>
     </div>
+    <p class="footer-mark" aria-hidden="true">Novaris</p>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Novaris Photo Guides. All rights reserved.</p>
       <p>Prices in USD. Applicable taxes are calculated at checkout.</p>

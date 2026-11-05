@@ -26,7 +26,8 @@
 <script src="js/products.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
-<body>
+<body id="top">
+<div class="progress" aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
@@ -49,6 +50,8 @@
     <h1>Contact us</h1>
     <p class="lede">Support is handled by email. We reply within two business days.</p>
   </header>
+  <div class="prose-layout no-toc">
+    
   <div class="prose">
     
 
@@ -58,7 +61,7 @@
       <p style="margin:0">Response time: within two business days.</p>
     </div>
 
-    <h2>What to include</h2>
+    <h2 id="what-to-include">What to include</h2>
     <p>To help us find your order and answer in one reply, please include:</p>
     <ul>
       <li><strong>Your order number</strong>, from your confirmation email or the order confirmation screen.</li>
@@ -67,7 +70,7 @@
       <li><strong>A short description</strong> of what you need, such as a resent download link, a replacement file, or a refund.</li>
     </ul>
 
-    <h2>Common requests</h2>
+    <h2 id="common-requests">Common requests</h2>
     <ul>
       <li><strong>Download email didn't arrive:</strong> check your spam folder first. If it's not there after an hour, email us and we'll resend the link. See the <a href="delivery.html">Delivery Policy</a>.</li>
       <li><strong>Refund:</strong> send your order number within 14 days of purchase. No reason is required. See the <a href="refunds.html">Refund Policy</a>.</li>
@@ -75,12 +78,14 @@
       <li><strong>Privacy requests:</strong> to access, correct, or delete your information, see the <a href="privacy.html">Privacy Policy</a>.</li>
     </ul>
 
-    <h2>Before you write</h2>
+    <h2 id="before-you-write">Before you write</h2>
     <p>Many questions about formats, printing, and licensing are answered on the <a href="faq.html">FAQ</a> page. Please note that the guides are reference material, and we don't offer critique of photographs or individual photography advice by email.</p>
+  </div>
   </div>
 </div>
 <div class="section" aria-hidden="true" style="padding-top:0"></div>
 </main>
+<a class="to-top" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">Back to top</span></a>
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
@@ -89,6 +94,17 @@
         <p>Printable PDF reference guides for photographers: shot lists, lighting diagrams, posing references, settings charts, and planning worksheets.</p>
         <p>Support: <a href="mailto:novarissupportmails@gmail.com">novarissupportmails@gmail.com</a></p>
       </div>
+      <nav aria-label="Guides">
+        <p class="footer-heading">Guides</p>
+        <ul class="footer-links footer-links-single">
+          <li><a href="portrait-session-guide.html">Portrait Session Guide</a></li>
+          <li><a href="wedding-day-guide.html">Wedding Day Guide</a></li>
+          <li><a href="product-photography-guide.html">Product Photography Guide</a></li>
+          <li><a href="landscape-travel-field-guide.html">Landscape &amp; Travel Field Guide</a></li>
+          <li><a href="event-coverage-guide.html">Event Coverage Guide</a></li>
+          <li><a href="complete-reference-library.html">Complete Reference Library</a></li>
+        </ul>
+      </nav>
       <div class="footer-cols">
         <nav aria-label="Policies and help">
           <p class="footer-heading">Policies and help</p>
@@ -99,10 +115,13 @@
             <li><a href="delivery.html">Delivery</a></li>
             <li><a href="disclaimer.html">Disclaimer</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="about.html">About</a></li>
           </ul>
         </nav>
       </div>
     </div>
+    <p class="footer-mark" aria-hidden="true">Novaris</p>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Novaris Photo Guides. All rights reserved.</p>
       <p>Prices in USD. Applicable taxes are calculated at checkout.</p>

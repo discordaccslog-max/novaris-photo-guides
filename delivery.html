@@ -26,7 +26,8 @@
 <script src="js/products.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
-<body>
+<body id="top">
+<div class="progress" aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
@@ -49,6 +50,18 @@
     <h1>Delivery Policy</h1>
     
   </header>
+  <div class="prose-layout">
+    <details class="toc" data-toc>
+      <summary>On this page</summary>
+      <p class="toc-title" aria-hidden="true">On this page</p>
+      <ol>
+        <li><a href="#how-delivery-works">How delivery works</a></li>
+        <li><a href="#if-the-email-doesn-t-arrive">If the email doesn't arrive</a></li>
+        <li><a href="#if-a-file-won-t-open">If a file won't open</a></li>
+        <li><a href="#no-physical-shipment">No physical shipment</a></li>
+        <li><a href="#questions">Questions</a></li>
+      </ol>
+    </details>
   <div class="prose">
     <p class="updated">Last updated: <time datetime="2026-11-04">November 4, 2026</time></p>
 
@@ -56,7 +69,7 @@
       <p><strong>All products are digital and delivered by download.</strong> There is no physical shipment.</p>
     </div>
 
-    <h2>How delivery works</h2>
+    <h2 id="how-delivery-works">How delivery works</h2>
     <p>Immediately after your payment goes through, two things happen:</p>
     <ul>
       <li>a download link is shown on the order confirmation screen; and</li>
@@ -64,7 +77,7 @@
     </ul>
     <p>Each guide includes a US Letter PDF and an A4 PDF. The Complete Reference Library includes all five guides in both sizes.</p>
 
-    <h2>If the email doesn't arrive</h2>
+    <h2 id="if-the-email-doesn-t-arrive">If the email doesn't arrive</h2>
     <p>Most delivery emails arrive within a few minutes. If yours hasn't arrived within an hour:</p>
     <ol>
       <li>Check your spam, junk, or promotions folder.</li>
@@ -72,18 +85,20 @@
       <li>We'll resend the download link.</li>
     </ol>
 
-    <h2>If a file won't open</h2>
+    <h2 id="if-a-file-won-t-open">If a file won't open</h2>
     <p>The guides open in any standard PDF reader. If a file is damaged or won't open, email us and we'll send a replacement, or a refund if you prefer, as described in our <a href="refunds.html">Refund Policy</a>.</p>
 
-    <h2>No physical shipment</h2>
+    <h2 id="no-physical-shipment">No physical shipment</h2>
     <p>Nothing is printed or posted. There are no shipping charges and no delivery times beyond the email above. To use the guides on paper, print them yourself at home or at a print shop.</p>
 
-    <h2>Questions</h2>
+    <h2 id="questions">Questions</h2>
     <p>Email <a href="mailto:novarissupportmails@gmail.com">novarissupportmails@gmail.com</a>. We reply within two business days.</p>
+  </div>
   </div>
 </div>
 <div class="section" aria-hidden="true" style="padding-top:0"></div>
 </main>
+<a class="to-top" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">Back to top</span></a>
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
@@ -92,6 +107,17 @@
         <p>Printable PDF reference guides for photographers: shot lists, lighting diagrams, posing references, settings charts, and planning worksheets.</p>
         <p>Support: <a href="mailto:novarissupportmails@gmail.com">novarissupportmails@gmail.com</a></p>
       </div>
+      <nav aria-label="Guides">
+        <p class="footer-heading">Guides</p>
+        <ul class="footer-links footer-links-single">
+          <li><a href="portrait-session-guide.html">Portrait Session Guide</a></li>
+          <li><a href="wedding-day-guide.html">Wedding Day Guide</a></li>
+          <li><a href="product-photography-guide.html">Product Photography Guide</a></li>
+          <li><a href="landscape-travel-field-guide.html">Landscape &amp; Travel Field Guide</a></li>
+          <li><a href="event-coverage-guide.html">Event Coverage Guide</a></li>
+          <li><a href="complete-reference-library.html">Complete Reference Library</a></li>
+        </ul>
+      </nav>
       <div class="footer-cols">
         <nav aria-label="Policies and help">
           <p class="footer-heading">Policies and help</p>
@@ -102,10 +128,13 @@
             <li><a href="delivery.html">Delivery</a></li>
             <li><a href="disclaimer.html">Disclaimer</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="about.html">About</a></li>
           </ul>
         </nav>
       </div>
     </div>
+    <p class="footer-mark" aria-hidden="true">Novaris</p>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Novaris Photo Guides. All rights reserved.</p>
       <p>Prices in USD. Applicable taxes are calculated at checkout.</p>

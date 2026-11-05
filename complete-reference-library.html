@@ -26,7 +26,8 @@
 <script src="js/products.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
-<body>
+<body id="top">
+<div class="progress" aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
@@ -98,8 +99,8 @@
     </div>
     <div class="preview-grid">
       <figure class="preview reveal" style="--stagger:0">
-        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-16-t pv-16-d" font-family="Inter, system-ui, sans-serif">
-<title id="pv-16-t">Two-light portrait: key and fill</title><desc id="pv-16-d">Top-down diagram with a backdrop at the top, the subject in the center, a softbox key light at 45 degrees to camera left, a reflector for fill on the right, and the camera at the bottom, followed by placement notes.</desc>
+        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-20-t pv-20-d" font-family="Inter, system-ui, sans-serif">
+<title id="pv-20-t">Two-light portrait: key and fill</title><desc id="pv-20-d">Top-down diagram with a backdrop at the top, the subject in the center, a softbox key light at 45 degrees to camera left, a reflector for fill on the right, and the camera at the bottom, followed by placement notes.</desc>
 <rect width="300" height="388" fill="#fbf8f2"/>
 <rect x="20" y="20" width="4" height="26" fill="#c77d16"/>
 <text x="32" y="30" font-size="7" letter-spacing="1.4" fill="#6b645a">LIGHTING SETUPS</text>
@@ -111,8 +112,8 @@
         <figcaption><strong>Lighting diagram</strong>From the Portrait Session Guide: a two-light portrait setup.</figcaption>
       </figure>
       <figure class="preview reveal" style="--stagger:1">
-        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-17-t pv-17-d" font-family="Inter, system-ui, sans-serif">
-<title id="pv-17-t">Shot list: ceremony</title><desc id="pv-17-d">A ceremony shot list with a position column and checkboxes, listing shots from the empty venue through the processional, vows, rings, kiss, and recessional.</desc>
+        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-21-t pv-21-d" font-family="Inter, system-ui, sans-serif">
+<title id="pv-21-t">Shot list: ceremony</title><desc id="pv-21-d">A ceremony shot list with a position column and checkboxes, listing shots from the empty venue through the processional, vows, rings, kiss, and recessional.</desc>
 <rect width="300" height="388" fill="#fbf8f2"/>
 <rect x="20" y="20" width="4" height="26" fill="#c77d16"/>
 <text x="32" y="30" font-size="7" letter-spacing="1.4" fill="#6b645a">SHOT LISTS BY PHASE</text>
@@ -124,8 +125,8 @@
         <figcaption><strong>Shot list layout</strong>From the Wedding Day Guide: the ceremony shot list.</figcaption>
       </figure>
       <figure class="preview reveal" style="--stagger:2">
-        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-18-t pv-18-d" font-family="Inter, system-ui, sans-serif">
-<title id="pv-18-t">Sunrise and sunset planning sheet</title><desc id="pv-18-d">A planning sheet with fields for location, date, sunrise, sunset, golden hour and blue hour times, a compass diagram with sunrise and sunset directions marked, fields for bearings, weather and arrival time, and lines for composition ideas.</desc>
+        <div class="preview-page"><svg viewBox="0 0 300 388" role="img" aria-labelledby="pv-22-t pv-22-d" font-family="Inter, system-ui, sans-serif">
+<title id="pv-22-t">Sunrise and sunset planning sheet</title><desc id="pv-22-d">A planning sheet with fields for location, date, sunrise, sunset, golden hour and blue hour times, a compass diagram with sunrise and sunset directions marked, fields for bearings, weather and arrival time, and lines for composition ideas.</desc>
 <rect width="300" height="388" fill="#fbf8f2"/>
 <rect x="20" y="20" width="4" height="26" fill="#c77d16"/>
 <text x="32" y="30" font-size="7" letter-spacing="1.4" fill="#6b645a">SUNRISE AND SUNSET PLANNING</text>
@@ -167,11 +168,13 @@
 </section>
 
 <section class="section" aria-labelledby="format-title">
-  <div class="wrap narrow">
+  <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Formats</span>
       <h2 id="format-title">Formats and sizes</h2>
     </div>
+    <div class="format-grid">
+    <div>
     <ul class="spec-list reveal">
       <li><span>File type</span><span>PDF, delivered by download</span></li>
       <li><span>Page sizes</span><span>US Letter (8.5 &times; 11 in) and A4 (210 &times; 297 mm), both included</span></li>
@@ -182,6 +185,23 @@
       <li><span>License</span><span>Personal and commercial use in your own photography work. See the <a href="terms.html">Terms of Service</a>.</span></li>
     </ul>
     <div class="reveal" style="margin-top:2rem"><p class="muted">Each guide in the library is also sold on its own.</p></div>
+    </div>
+    <figure class="size-figure reveal">
+      <svg class="size-diagram" viewBox="0 0 240 310" role="img" aria-labelledby="ps-t ps-d" font-family="Inter, system-ui, sans-serif">
+<title id="ps-t">US Letter and A4 page sizes compared</title>
+<desc id="ps-d">Two page outlines aligned at the bottom left corner. US Letter is 8.5 by 11 inches, slightly wider. A4 is 210 by 297 millimetres, slightly taller.</desc>
+<rect x="26" y="24.8" width="181.9" height="257.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4"/>
+<rect x="26" y="40.0" width="187.0" height="242.0" fill="#e09a2c" fill-opacity=".12" stroke="#e09a2c" stroke-width="1.8"/>
+<text x="36" y="64.0" font-size="14" font-weight="600" fill="currentColor">US Letter</text>
+<text x="36" y="80.0" font-size="12" fill="currentColor" opacity=".75">8.5 × 11 in</text>
+<text x="36" y="16.8" font-size="14" font-weight="600" fill="currentColor">A4</text>
+<text x="62" y="16.8" font-size="12" fill="currentColor" opacity=".75">210 × 297 mm</text>
+<line x1="26" y1="294" x2="213" y2="294" stroke="currentColor" stroke-width=".8" opacity=".5"/>
+<text x="119.5" y="306" font-size="11" text-anchor="middle" fill="currentColor" opacity=".75">Both sizes included</text>
+</svg>
+      <figcaption>Every purchase includes a US Letter file and an A4 file.</figcaption>
+    </figure>
+    </div>
   </div>
 </section>
 
@@ -214,6 +234,7 @@
   </div>
 </section>
 </main>
+<a class="to-top" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden">Back to top</span></a>
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
@@ -222,6 +243,17 @@
         <p>Printable PDF reference guides for photographers: shot lists, lighting diagrams, posing references, settings charts, and planning worksheets.</p>
         <p>Support: <a href="mailto:novarissupportmails@gmail.com">novarissupportmails@gmail.com</a></p>
       </div>
+      <nav aria-label="Guides">
+        <p class="footer-heading">Guides</p>
+        <ul class="footer-links footer-links-single">
+          <li><a href="portrait-session-guide.html">Portrait Session Guide</a></li>
+          <li><a href="wedding-day-guide.html">Wedding Day Guide</a></li>
+          <li><a href="product-photography-guide.html">Product Photography Guide</a></li>
+          <li><a href="landscape-travel-field-guide.html">Landscape &amp; Travel Field Guide</a></li>
+          <li><a href="event-coverage-guide.html">Event Coverage Guide</a></li>
+          <li><a href="complete-reference-library.html">Complete Reference Library</a></li>
+        </ul>
+      </nav>
       <div class="footer-cols">
         <nav aria-label="Policies and help">
           <p class="footer-heading">Policies and help</p>
@@ -232,10 +264,13 @@
             <li><a href="delivery.html">Delivery</a></li>
             <li><a href="disclaimer.html">Disclaimer</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="about.html">About</a></li>
           </ul>
         </nav>
       </div>
     </div>
+    <p class="footer-mark" aria-hidden="true">Novaris</p>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Novaris Photo Guides. All rights reserved.</p>
       <p>Prices in USD. Applicable taxes are calculated at checkout.</p>
