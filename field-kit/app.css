@@ -477,3 +477,10 @@ body.fk-preview .fk-report, body.fk-preview .fk-back { display: none; }
 
 /* Headings receive focus after navigation for screen readers; no ring needed. */
 [tabindex="-1"]:focus { outline: none; }
+
+/* Quality pass: wrapping titles and group names on small screens. */
+textarea.fk-doc-title { resize: none; overflow: hidden; line-height: 1.2; min-height: 0; display: block; }
+.fk-group-head { flex-wrap: wrap; }
+.fk-group-head .fk-group-name { flex: 1 1 100%; }
+@media (min-width: 720px) { .fk-group-head .fk-group-name { flex: 1 1 auto; } }
+textarea.fk-group-name { resize: none; overflow: hidden; min-height: var(--tap); line-height: 1.35; }

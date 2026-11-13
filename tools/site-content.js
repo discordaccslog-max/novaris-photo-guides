@@ -66,13 +66,13 @@ export const PRODUCT_PAGES = {
     lede: "An interactive field guide for tabletop product photography that runs in your browser on a phone, tablet, or computer. It holds overhead lighting diagrams you can tap for setup notes, a reference for backgrounds and surfaces, shot lists covering the standard e-commerce angles, and settings charts with an exposure calculator.",
     contents: [
       ["Five tabletop lighting diagrams", "Soft side light with a bounce card, overhead flat lay, pure white background, reflective products, and backlit glass. Tap any light, card, diffuser, or the camera to see its role and setup notes."],
-      ["Background and surface reference", "How seamless sweeps, black and white acrylic, textured boards, fabric, and coloured paper look and behave under light, with practical notes for each."],
-      ["E-commerce angle shot list", "A consistent set of catalogue angles and supporting frames for each product. Tick angles off per product and customize the list for a client's catalogue."],
+      ["Background and surface reference", "How seamless sweeps, black and white acrylic, textured boards, fabric, and colored paper look and behave under light, with practical notes for each."],
+      ["E-commerce angle shot list", "A consistent set of catalog angles and supporting frames for each product. Tick angles off per product and customize the list for a client's catalog."],
       ["Pre-shoot setup check", "A checklist to run before the first product so a whole set matches: camera position, focal length, white balance, and exposure."],
       ["Settings charts and exposure calculator", "Starting points for white backgrounds, reflective items, flat lays, small details, and continuous light, plus a calculator for equivalent exposures."]
     ],
     forWho: [
-      "Photographers shooting products on a tabletop for online shops, catalogues, or listings",
+      "Photographers shooting products on a tabletop for online shops, catalogs, or listings",
       "Small-business owners who photograph their own products and want a consistent shot list",
       "Anyone who wants a lighting and settings reference beside the shooting table"
     ],
@@ -102,7 +102,7 @@ export const PRODUCT_PAGES = {
     ],
     forWho: [
       "Photographers who plan landscape shoots around sunrise, sunset, and weather",
-      "Travelling photographers who want a scouting and packing routine on their phone",
+      "Traveling photographers who want a scouting and packing routine on their phone",
       "Anyone who wants sun times and settings available offline on location"
     ],
     notFor: [

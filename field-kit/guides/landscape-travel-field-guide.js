@@ -63,7 +63,7 @@ export default {
         { id: "foreground", title: "Foreground frame", text: "A strong foreground element close to the lens adds depth. Get low and close to it." },
         { id: "layers", title: "Layers", text: "Overlapping ridges or buildings fading with distance create depth, especially in haze or low sun." },
         { id: "horizon", title: "Horizon placement", text: "A low horizon emphasizes sky; a high horizon emphasizes land or water. Keep it level." },
-        { id: "symmetry", title: "Symmetry and reflection", text: "Still water and centered compositions suit symmetry. Centre the horizon on purpose, not by default." }
+        { id: "symmetry", title: "Symmetry and reflection", text: "Still water and centered compositions suit symmetry. Center the horizon on purpose, not by default." }
       ] },
     { id: "pocket", kind: "pocket", title: "Pocket card",
       description: "A small printable card (4 × 6 in) with field settings, sun times for your saved location, and your gear checklist, to carry in a camera bag." }

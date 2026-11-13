@@ -101,8 +101,13 @@ export function docEditor(ctx, doc, template, renderBody, { exportOptions = [], 
     if (focusKey) { const el = body.querySelector(`[data-key="${CSS.escape(focusKey)}"]`); if (el) el.focus(); }
   }
 
-  const titleInput = h("input", { class: "fk-doc-title", type: "text", value: current.title, "aria-label": "Title", maxlength: "120" });
-  titleInput.addEventListener("change", () => { current = { ...current, title: titleInput.value.trim() || current.title }; persist(); });
+  const titleInput = h("textarea", { class: "fk-doc-title", rows: "1", "aria-label": "Title", maxlength: "120", spellcheck: "false" });
+  titleInput.value = current.title;
+  const fitTitle = () => { titleInput.style.height = "auto"; titleInput.style.height = titleInput.scrollHeight + "px"; };
+  titleInput.addEventListener("input", fitTitle);
+  titleInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); titleInput.blur(); } });
+  titleInput.addEventListener("change", () => { current = { ...current, title: titleInput.value.replace(/\s+/g, " ").trim() || current.title }; titleInput.value = current.title; persist(); });
+  requestAnimationFrame(fitTitle);
 
   const actions = h("div", { class: "fk-doc-actions" }, undoB, redoB);
   if (!ctx.preview) {
@@ -294,7 +299,11 @@ export function groupsEditor(ctx, doc, template, backRoute) {
       const cb = h("input", { type: "checkbox", id: cbId, class: "fk-checkbox", "data-key": cbId });
       cb.checked = !!g.done;
       cb.addEventListener("change", () => { const d = api.data; d.groups[gi].done = cb.checked; api.commit(d); });
-      const name = h("input", { type: "text", class: "fk-input fk-group-name", value: g.name, "aria-label": `Group ${gi + 1} name`, "data-key": `gn-${g.id}` });
+      const name = h("textarea", { rows: "1", class: "fk-input fk-group-name", "aria-label": `Group ${gi + 1} name`, "data-key": `gn-${g.id}` });
+      name.value = g.name;
+      const fitName = () => { name.style.height = "auto"; name.style.height = name.scrollHeight + 3 + "px"; };
+      name.addEventListener("input", fitName);
+      requestAnimationFrame(fitName);
       name.addEventListener("input", debounce(() => { const d = api.data; d.groups[gi].name = name.value; api.commit(d, { render: false }); }, 450));
       const people = h("textarea", { class: "fk-input", rows: "2", placeholder: "Names of everyone in this group", "aria-label": `People in group ${gi + 1}`, "data-key": `gp-${g.id}` });
       people.value = g.people || "";

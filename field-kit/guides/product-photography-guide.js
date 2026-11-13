@@ -8,7 +8,7 @@ export default {
     {
       id: "ecommerce",
       title: "Standard e-commerce angles",
-      description: "A consistent set of catalogue angles for each product.",
+      description: "A consistent set of catalog angles for each product.",
       sections: [
         { title: "Main angles", items: [
           { text: "Front, centered", note: "Usually the listing's main image." },
@@ -57,7 +57,7 @@ export default {
       elements: [
         { id: "sweep", type: "backdrop", x: 180, y: 46, label: "Sweep", role: "Seamless curved background.", notes: "Keep the product well forward of the curve so the background stays even and the shadow falls softly." },
         { id: "key", type: "softbox", x: 70, y: 138, rot: 90, label: "Softbox", role: "Main light: shape and highlights.", notes: "Level with the product or slightly above, a little behind it so the light wraps toward the camera. Closer gives softer light with faster falloff." },
-        { id: "product", type: "product", x: 180, y: 140, label: "Product", role: "Centre of the set.", notes: "Turn the product a few degrees at a time and watch how highlights move across curved surfaces." },
+        { id: "product", type: "product", x: 180, y: 140, label: "Product", role: "Center of the set.", notes: "Turn the product a few degrees at a time and watch how highlights move across curved surfaces." },
         { id: "card", type: "card", x: 262, y: 140, rot: 90, label: "Bounce card (white)", role: "Fill: lifts the shadow side.", notes: "Move it closer for less contrast. A black card instead deepens shadows and adds definition." },
         { id: "camera", type: "camera", x: 180, y: 262, label: "Camera on tripod", role: "Fixed position for every product.", notes: "Mark the tripod legs and camera height so later products match." }
       ],
@@ -97,14 +97,14 @@ export default {
       title: "Reflective products",
       summary: "Large diffused light and black cards to control reflections on shiny surfaces.",
       elements: [
-        { id: "diffusion", type: "diffusion", x: 84, y: 140, rot: 90, label: "Diffusion panel", role: "A large, even source that reflects as a clean gradient.", notes: "Light it from behind with a flash or continuous light. Shiny products reflect their surroundings, so a large panel gives a smooth highlight instead of a hot spot." },
-        { id: "light", type: "flash", x: 34, y: 140, rot: 90, label: "Light behind panel", role: "Illuminates the diffusion panel.", notes: "Move it further back to light the panel more evenly." },
+        { id: "diffusion", type: "diffusion", x: 104, y: 150, rot: 90, label: "Diffusion panel", role: "A large, even source that reflects as a clean gradient.", notes: "Light it from behind with a flash or continuous light. Shiny products reflect their surroundings, so a large panel gives a smooth highlight instead of a hot spot." },
+        { id: "light", type: "flash", x: 70, y: 66, rot: 90, label: "Light behind panel", role: "Illuminates the diffusion panel.", notes: "Move it further back to light the panel more evenly." },
         { id: "product", type: "product", x: 180, y: 140, label: "Product", role: "Reflective object.", notes: "Turn the product until the panel's reflection runs along the edge you want to define." },
         { id: "flag", type: "flag", x: 270, y: 140, rot: 90, label: "Black card", role: "Adds dark edge reflections for definition.", notes: "Black cards reflect as dark lines that outline glossy edges. Move them closer or further to change line thickness." },
         { id: "camera", type: "camera", x: 180, y: 262, label: "Camera", role: "Through a hole in a black card, if needed.", notes: "If the camera appears in the reflection, shoot from further back with a longer lens or hide it behind black card." }
       ],
       beams: [{ from: "light", to: "diffusion" }, { from: "diffusion", to: "product" }],
-      tips: ["Wear dark clothing so you don't appear in reflections.", "A polariser can reduce some reflections on non-metallic surfaces."]
+      tips: ["Wear dark clothing so you don't appear in reflections.", "A polarizer can reduce some reflections on non-metallic surfaces."]
     },
     {
       id: "backlit-glass",
@@ -112,7 +112,7 @@ export default {
       summary: "Light from behind through a diffuser to show transparency and outline glass.",
       elements: [
         { id: "diffuser", type: "diffusion", x: 180, y: 56, rot: 0, label: "Diffuser behind", role: "Glowing background that shines through the glass.", notes: "A bright, even background shows liquid color and clarity. Leave space between product and diffuser." },
-        { id: "light", type: "flash", x: 180, y: 22, rot: 180, label: "Light behind diffuser", role: "Lights the diffuser.", notes: "Aim at the center of the diffuser; a gradient from center to edge often looks good behind glass." },
+        { id: "light", type: "flash", x: 268, y: 26, rot: 180, label: "Light behind diffuser", role: "Lights the diffuser.", notes: "Aim at the center of the diffuser; a gradient from center to edge often looks good behind glass." },
         { id: "flag-l", type: "flag", x: 120, y: 120, rot: 75, label: "Black card", role: "Defines the left edge of the glass.", notes: "Black cards just outside the frame create dark outlines along the glass edges." },
         { id: "flag-r", type: "flag", x: 240, y: 120, rot: 105, label: "Black card", role: "Defines the right edge.", notes: "Keep both cards at equal distance for symmetrical edges." },
         { id: "product", type: "product", x: 180, y: 150, label: "Glass product", role: "Transparent object.", notes: "Clean glass with a lint-free cloth and wear gloves to avoid fingerprints." },
@@ -126,7 +126,7 @@ export default {
   references: {
     title: "Backgrounds and surfaces",
     items: [
-      { title: "White seamless sweep", text: "Clean, distraction-free look for catalogues. Needs separate background light for pure white. Shows dust and scuffs; replace or trim used sections." },
+      { title: "White seamless sweep", text: "Clean, distraction-free look for catalogs. Needs separate background light for pure white. Shows dust and scuffs; replace or trim used sections." },
       { title: "Black acrylic", text: "Gives a glossy reflection under the product for a premium look. Reflects everything, so keep the set dark and wipe away fingerprints." },
       { title: "White acrylic", text: "A soft reflection on a bright base. Works well with backlighting for a glowing surface." },
       { title: "Textured boards", text: "Wood-effect, stone-effect, or concrete-effect boards add context without clutter. Side light brings out texture; front light flattens it." },

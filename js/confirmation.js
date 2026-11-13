@@ -1,4 +1,4 @@
-/* Novaris Photo Guides — the downloadable order confirmation PDF. */
+/* Novaris Photo Guides — the order confirmation PDF. */
 import { PdfDoc, textWidth } from "./pdf.js";
 
 const INK = [31, 29, 26];
