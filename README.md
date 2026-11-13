@@ -1,6 +1,6 @@
 # Novaris Photo Guides
 
-Storefront and Field Kit for Novaris Photo Guides: interactive photography field guides that run in the browser and unlock with a license code. Plain HTML, CSS, and JavaScript, deployed as a static site on Vercel at https://novaris-photo-guides.vercel.app.
+Storefront and Field Kit for Novaris Photo Guides: interactive photography field guides that run in the browser and unlock with a license code. Plain HTML, CSS, and JavaScript, deployed as a static site on Vercel at https://www.novarisguides.com.
 
 ## How it works
 
@@ -16,7 +16,7 @@ Edit `js/products.js` and paste each product's checkout link into `checkoutUrl`.
 In your payment provider, set each product's success (redirect) URL to its confirmation page with the provider's order or session ID placeholder, for example:
 
 ```
-https://novaris-photo-guides.vercel.app/thank-you/portrait-session-guide/?session_id={CHECKOUT_SESSION_ID}
+https://www.novarisguides.com/thank-you/portrait-session-guide/?session_id={CHECKOUT_SESSION_ID}
 ```
 
 Then run `npm run kit` to rebuild the fulfillment kit with checkout screenshots.

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://novaris-photo-guides.vercel.app/sitemap.xml
+Sitemap: https://www.novarisguides.com/sitemap.xml
