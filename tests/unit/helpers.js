@@ -16,7 +16,7 @@ export function loadClassicScript(rel) {
 /* Extracts the text and link targets of every page of a PDF with pdf.js. */
 export async function pdfText(bytes) {
   const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
-  const doc = await pdfjs.getDocument({ data: new Uint8Array(bytes), isEvalSupported: false }).promise;
+  const doc = await pdfjs.getDocument({ data: new Uint8Array(bytes), isEvalSupported: false, standardFontDataUrl: path.join(ROOT, "node_modules", "pdfjs-dist", "standard_fonts").split(path.sep).join("/") + "/" }).promise;
   const pages = [];
   const links = [];
   for (let i = 1; i <= doc.numPages; i++) {
