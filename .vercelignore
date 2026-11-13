@@ -1,3 +1,12 @@
 .claude
 .env*
 README.md
+node_modules
+package.json
+package-lock.json
+tests
+tools
+test-results
+playwright-report
+fulfillment-kit
+playwright.config.js
