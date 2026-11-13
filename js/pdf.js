@@ -9,7 +9,8 @@
 
 export const PAGE_SIZES = {
   letter: { width: 612, height: 792, label: "US Letter" },
-  a4: { width: 595.28, height: 841.89, label: "A4" }
+  a4: { width: 595.28, height: 841.89, label: "A4" },
+  pocket: { width: 288, height: 432, label: "4 × 6 in" }
 };
 
 // Glyph widths (1/1000 em) for character codes 32–126.

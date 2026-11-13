@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-mode="standard" data-size="normal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Field Kit | Novaris Photo Guides</title>
+<meta name="description" content="The Novaris Field Kit: your photography field guides in the browser, with shot lists, lighting diagrams, poses, settings, and planning worksheets. Enter your license code to open your guides.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1f1d1a">
+<link rel="manifest" href="/field-kit/manifest.webmanifest">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/field-kit/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Field Kit">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/field-kit/app.css">
+<script>
+  (function () {
+    try {
+      var s = JSON.parse(localStorage.getItem("nfk.settings") || "{}");
+      document.documentElement.dataset.mode = s.mode || "standard";
+      document.documentElement.dataset.size = s.large ? "large" : "normal";
+    } catch (e) {}
+  })();
+</script>
+<script src="/js/site-config.js"></script>
+<script src="/js/products.js"></script>
+<script type="module" src="/field-kit/app.js"></script>
+</head>
+<body>
+<div id="app">
+  <p class="fk-loading">Loading the Field Kit…</p>
+  <noscript><p class="fk-loading">The Field Kit needs JavaScript. Turn it on in your browser settings and reload this page.</p></noscript>
+</div>
+</body>
+</html>
