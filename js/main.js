@@ -37,17 +37,74 @@
       el.textContent = product.name;
     });
 
+    /*
+      Buy buttons appear only when checkoutUrl is filled in. Each one sits
+      under a terms checkbox and stays disabled until the box is ticked.
+    */
     var url = validCheckoutUrl(product.checkoutUrl);
-    scope.querySelectorAll("[data-buy]").forEach(function (slot) {
+    var slots = scope.querySelectorAll("[data-buy]");
+    var boxes = [];
+    var links = [];
+    var hints = [];
+    function setAgreed(agreed) {
+      boxes.forEach(function (b) { b.checked = agreed; });
+      links.forEach(function (link) {
+        if (agreed) {
+          link.href = url;
+          link.removeAttribute("aria-disabled");
+          link.classList.remove("is-disabled");
+        } else {
+          link.removeAttribute("href");
+          link.setAttribute("aria-disabled", "true");
+          link.classList.add("is-disabled");
+        }
+      });
+      hints.forEach(function (h) { h.hidden = agreed; });
+    }
+    slots.forEach(function (slot, i) {
       slot.textContent = "";
       if (!url) return;
+      var id = "agree-" + product.slug + "-" + i;
+      var hintId = id + "-hint";
+      var wrap = document.createElement("div");
+      wrap.className = "buy-agree";
+      var label = document.createElement("label");
+      label.className = "buy-check";
+      label.setAttribute("for", id);
+      var box = document.createElement("input");
+      box.type = "checkbox";
+      box.id = id;
+      box.setAttribute("aria-describedby", hintId);
+      label.appendChild(box);
+      var text = document.createElement("span");
+      text.innerHTML = 'I agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>';
+      label.appendChild(text);
       var link = document.createElement("a");
-      link.className = "btn btn-primary";
-      link.href = url;
+      link.className = "btn btn-primary buy-button";
       link.rel = "noopener";
+      link.setAttribute("role", "link");
+      link.tabIndex = 0;
       link.textContent = "Buy " + product.name + " — " + formatPrice(product.price);
-      slot.appendChild(link);
+      var hint = document.createElement("p");
+      hint.className = "buy-hint";
+      hint.id = hintId;
+      hint.textContent = "Tick the box to agree to the Terms of Service and Refund Policy before continuing to checkout.";
+      link.addEventListener("click", function (event) {
+        if (!box.checked) {
+          event.preventDefault();
+          box.focus();
+        }
+      });
+      box.addEventListener("change", function () { setAgreed(box.checked); });
+      wrap.appendChild(label);
+      wrap.appendChild(link);
+      wrap.appendChild(hint);
+      slot.appendChild(wrap);
+      boxes.push(box);
+      links.push(link);
+      hints.push(hint);
     });
+    if (url) setAgreed(false);
   });
 
   /* ---------- Current year in the footer ---------- */
