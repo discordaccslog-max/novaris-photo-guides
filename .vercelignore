@@ -10,3 +10,4 @@ test-results
 playwright-report
 fulfillment-kit
 playwright.config.js
+pdf-guides
