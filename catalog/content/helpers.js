@@ -60,3 +60,6 @@ export function macroDofTable(magnifications, apertures) {
 export function fiveHundredRule(focals) {
   return focals.map((f) => [`${f} mm`, `${Math.floor(500 / f)} s`, `${Math.floor(500 / (f * 1.5))} s`, `${Math.floor(500 / (f * 1.6))} s`]);
 }
+
+/* Non-lighting overhead diagrams (positions, flight patterns) use the same renderer with their own label. */
+export const diagram = (title, summary, elements, beams = [], tips = [], kicker = "Diagram") => ({ ...setup(title, summary, elements, beams, tips), kicker });
