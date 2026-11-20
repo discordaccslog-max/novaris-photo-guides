@@ -1,0 +1,566 @@
+[
+  {
+    "name": "Seasonal Mini Sessions Guide",
+    "slug": "seasonal-mini-sessions-guide",
+    "price": 20,
+    "description": "Shot lists, a back-to-back scheduling template, and set-up notes for short seasonal mini sessions.",
+    "options": [
+      {
+        "name": "Holiday backdrop setup cards",
+        "price": 2
+      },
+      {
+        "name": "Booking slot planner",
+        "price": 1
+      },
+      {
+        "name": "Client reminder message templates",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Street Photography Field Guide",
+    "slug": "street-photography-field-guide",
+    "price": 24,
+    "description": "Zone-focus reference, a walk planner, and pocket settings for shooting in public spaces.",
+    "options": [
+      {
+        "name": "Pocket settings card",
+        "price": 2
+      },
+      {
+        "name": "Zone focus distance chart",
+        "price": 2
+      },
+      {
+        "name": "Photo walk route planner",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Large Group & Reunion Guide",
+    "slug": "large-group-reunion-guide",
+    "price": 26,
+    "description": "Group arrangement diagrams, a name-list grouping planner, and outdoor setup notes for big groups.",
+    "options": [
+      {
+        "name": "Group arrangement planner",
+        "price": 3
+      },
+      {
+        "name": "Name-list grouping sheet",
+        "price": 2
+      },
+      {
+        "name": "Outdoor reflector setup card",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Pet Photography Guide",
+    "slug": "pet-photography-guide",
+    "price": 28,
+    "description": "Shot lists for dogs, cats, and small pets, attention prompts, and an owner questionnaire.",
+    "options": [
+      {
+        "name": "Owner questionnaire",
+        "price": 2
+      },
+      {
+        "name": "Attention prompt cards",
+        "price": 1
+      },
+      {
+        "name": "Outdoor session shot list",
+        "price": 2
+      },
+      {
+        "name": "Studio pet setup diagrams",
+        "price": 3
+      }
+    ]
+  },
+  {
+    "name": "Macro & Close-Up Guide",
+    "slug": "macro-close-up-guide",
+    "price": 30,
+    "description": "Depth-of-field charts, focus stacking worksheets, and diffuser setups for close-up work.",
+    "options": [
+      {
+        "name": "Focus stacking worksheet",
+        "price": 3
+      },
+      {
+        "name": "Depth of field chart",
+        "price": 2
+      },
+      {
+        "name": "Diffuser setup cards",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Engagement Session Guide",
+    "slug": "engagement-session-guide",
+    "price": 30,
+    "description": "Engagement shot lists, a location scouting form, and couple posing prompts.",
+    "options": [
+      {
+        "name": "Couple questionnaire",
+        "price": 2
+      },
+      {
+        "name": "Prompt card deck",
+        "price": 3
+      },
+      {
+        "name": "Location scouting form",
+        "price": 2
+      },
+      {
+        "name": "Outfit planning sheet",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Maternity Portrait Guide",
+    "slug": "maternity-portrait-guide",
+    "price": 32,
+    "description": "Maternity shot lists, posing references, and natural-light setups for indoor and outdoor sessions.",
+    "options": [
+      {
+        "name": "Wardrobe planning sheet",
+        "price": 2
+      },
+      {
+        "name": "Client questionnaire",
+        "price": 2
+      },
+      {
+        "name": "Golden hour location worksheet",
+        "price": 3
+      }
+    ]
+  },
+  {
+    "name": "Concert & Live Music Guide",
+    "slug": "concert-live-music-guide",
+    "price": 34,
+    "description": "Low-light settings, venue access checklists, and set-list shot planning for live shows.",
+    "options": [
+      {
+        "name": "Low-light pocket settings card",
+        "price": 3
+      },
+      {
+        "name": "Venue access checklist",
+        "price": 2
+      },
+      {
+        "name": "Set-list shot planner",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Video B-Roll & Shot List Guide",
+    "slug": "video-b-roll-shot-list-guide",
+    "price": 35,
+    "description": "B-roll checklists, storyboard sheets, and shot lists for short video projects.",
+    "options": [
+      {
+        "name": "Storyboard sheets",
+        "price": 3
+      },
+      {
+        "name": "Audio recording checklist",
+        "price": 2
+      },
+      {
+        "name": "Interview setup diagrams",
+        "price": 4
+      },
+      {
+        "name": "Edit log template",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Newborn & Baby Session Guide",
+    "slug": "newborn-baby-session-guide",
+    "price": 36,
+    "description": "Newborn and baby shot lists, a session timeline, and gentle posing and safety references.",
+    "options": [
+      {
+        "name": "Safety and posing checklist cards",
+        "price": 3
+      },
+      {
+        "name": "Parent prep questionnaire",
+        "price": 2
+      },
+      {
+        "name": "Session timeline template",
+        "price": 2
+      },
+      {
+        "name": "Prop and wrap planning sheet",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Astrophotography & Night Sky Guide",
+    "slug": "astrophotography-night-sky-guide",
+    "price": 38,
+    "description": "Night-sky settings, dark-site scouting forms, and planning sheets for Milky Way and star-trail shots.",
+    "options": [
+      {
+        "name": "Moon phase planning sheet",
+        "price": 2
+      },
+      {
+        "name": "Star trail stacking worksheet",
+        "price": 3
+      },
+      {
+        "name": "Red-light pocket card",
+        "price": 2
+      },
+      {
+        "name": "Dark-site scouting form",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Food Photography Guide",
+    "slug": "food-photography-guide",
+    "price": 39,
+    "description": "Window-light and overhead setups, styling checklists, and shot lists for menus and recipes.",
+    "options": [
+      {
+        "name": "Plating and styling checklist",
+        "price": 2
+      },
+      {
+        "name": "Window-light setup cards",
+        "price": 3
+      },
+      {
+        "name": "Overhead rig planning sheet",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Wildlife & Bird Photography Guide",
+    "slug": "wildlife-bird-photography-guide",
+    "price": 40,
+    "description": "Field settings, hide planning sheets, and species logs for wildlife and bird photography.",
+    "options": [
+      {
+        "name": "Hide and blind planning sheet",
+        "price": 3
+      },
+      {
+        "name": "Species log worksheet",
+        "price": 2
+      },
+      {
+        "name": "Field ethics checklist",
+        "price": 1
+      },
+      {
+        "name": "Shutter and ISO pocket card",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Headshot & Corporate Team Guide",
+    "slug": "headshot-corporate-team-guide",
+    "price": 42,
+    "description": "Team-day scheduling, consistent lighting setups, and shot lists for corporate headshots.",
+    "options": [
+      {
+        "name": "Team day scheduling sheet",
+        "price": 3
+      },
+      {
+        "name": "Client wardrobe and background guide",
+        "price": 2
+      },
+      {
+        "name": "Retouch notes template",
+        "price": 1
+      },
+      {
+        "name": "Multi-location setup cards",
+        "price": 4
+      }
+    ]
+  },
+  {
+    "name": "Real Estate & Interiors Guide",
+    "slug": "real-estate-interiors-guide",
+    "price": 44,
+    "description": "Room-by-room shot lists, bracketing references, and twilight exterior planning for property shoots.",
+    "options": [
+      {
+        "name": "Room-by-room shot list cards",
+        "price": 3
+      },
+      {
+        "name": "Twilight exterior planner",
+        "price": 4
+      },
+      {
+        "name": "Flash bracketing reference card",
+        "price": 2
+      },
+      {
+        "name": "Homeowner property prep checklist",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Elopement & Small Wedding Guide",
+    "slug": "elopement-small-wedding-guide",
+    "price": 45,
+    "description": "Elopement timelines, location and permit checklists, and shot lists for small weddings.",
+    "options": [
+      {
+        "name": "Elopement timeline template",
+        "price": 3
+      },
+      {
+        "name": "Permit and location checklist",
+        "price": 2
+      },
+      {
+        "name": "Vow moment shot list",
+        "price": 2
+      },
+      {
+        "name": "Weather backup planner",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Sports & Action Guide",
+    "slug": "sports-action-guide",
+    "price": 46,
+    "description": "Shutter-speed references, sideline positioning diagrams, and shot lists for sports and action.",
+    "options": [
+      {
+        "name": "Sport-specific shot list pack",
+        "price": 4
+      },
+      {
+        "name": "Shutter speed pocket card",
+        "price": 2
+      },
+      {
+        "name": "Sideline positioning diagrams",
+        "price": 3
+      },
+      {
+        "name": "Season planning calendar",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Automotive Photography Guide",
+    "slug": "automotive-photography-guide",
+    "price": 48,
+    "description": "Static and rolling shot lists, reflection control setups, and location planning for vehicles.",
+    "options": [
+      {
+        "name": "Rolling shot safety checklist",
+        "price": 3
+      },
+      {
+        "name": "Light painting worksheet",
+        "price": 4
+      },
+      {
+        "name": "Detail shot list",
+        "price": 2
+      }
+    ]
+  },
+  {
+    "name": "Architecture Photography Guide",
+    "slug": "architecture-photography-guide",
+    "price": 50,
+    "description": "Perspective references, sun-path facade planning, and interior and exterior shot lists.",
+    "options": [
+      {
+        "name": "Perspective correction reference",
+        "price": 2
+      },
+      {
+        "name": "Sun-path facade planner",
+        "price": 4
+      },
+      {
+        "name": "Interior bracketing sheet",
+        "price": 3
+      }
+    ]
+  },
+  {
+    "name": "Drone & Aerial Planning Guide",
+    "slug": "drone-aerial-planning-guide",
+    "price": 52,
+    "description": "Pre-flight checklists, airspace and permit planning sheets, and aerial shot pattern diagrams.",
+    "options": [
+      {
+        "name": "Pre-flight checklist cards",
+        "price": 3
+      },
+      {
+        "name": "Airspace and permit planning sheet",
+        "price": 4
+      },
+      {
+        "name": "Aerial shot pattern diagrams",
+        "price": 3
+      },
+      {
+        "name": "Battery and flight log",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Brand Content Photography Guide",
+    "slug": "brand-content-photography-guide",
+    "price": 54,
+    "description": "Content calendars, product and lifestyle shot lists, and mood boards for small-business brand shoots.",
+    "options": [
+      {
+        "name": "Content calendar sheet",
+        "price": 3
+      },
+      {
+        "name": "Product and lifestyle shot list",
+        "price": 3
+      },
+      {
+        "name": "Brand mood board template",
+        "price": 2
+      },
+      {
+        "name": "Image usage notes template",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Fashion & Lookbook Guide",
+    "slug": "fashion-lookbook-guide",
+    "price": 58,
+    "description": "Call sheets, garment shot lists, and strobe setups for fashion and lookbook shoots.",
+    "options": [
+      {
+        "name": "Mood board template",
+        "price": 3
+      },
+      {
+        "name": "Model call sheet",
+        "price": 2
+      },
+      {
+        "name": "Garment shot list",
+        "price": 3
+      },
+      {
+        "name": "Strobe lighting setup cards",
+        "price": 4
+      }
+    ]
+  },
+  {
+    "name": "Studio Lighting Setups Library",
+    "slug": "studio-lighting-setups-library",
+    "price": 64,
+    "description": "A library of overhead studio lighting diagrams with placement notes for one to four lights.",
+    "options": [
+      {
+        "name": "Gel and color setup cards",
+        "price": 3
+      },
+      {
+        "name": "Light ratio reference sheet",
+        "price": 2
+      },
+      {
+        "name": "Studio booking checklist",
+        "price": 1
+      },
+      {
+        "name": "Background setup diagrams",
+        "price": 4
+      }
+    ]
+  },
+  {
+    "name": "Client Workflow Kit",
+    "slug": "client-workflow-kit",
+    "price": 68,
+    "description": "Booking, session-day, and delivery checklists plus message templates for running client shoots.",
+    "options": [
+      {
+        "name": "Client message template pack",
+        "price": 3
+      },
+      {
+        "name": "Pricing worksheet",
+        "price": 2
+      },
+      {
+        "name": "Session booking checklist",
+        "price": 2
+      },
+      {
+        "name": "Gallery delivery checklist",
+        "price": 1
+      }
+    ]
+  },
+  {
+    "name": "Wedding & Portrait Pro Bundle",
+    "slug": "wedding-portrait-pro-bundle",
+    "price": 145,
+    "description": "Seven guides together: Wedding Day, Portrait Session, Engagement Session, Elopement & Small Wedding, Newborn & Baby, Maternity Portrait, and Large Group & Reunion.",
+    "options": [
+      {
+        "name": "Pocket card set for every included guide",
+        "price": 5
+      },
+      {
+        "name": "Client questionnaire bundle",
+        "price": 3
+      },
+      {
+        "name": "Yearly booking calendar",
+        "price": 2
+      },
+      {
+        "name": "A4 and US Letter print editions",
+        "price": 4
+      }
+    ]
+  }
+]
