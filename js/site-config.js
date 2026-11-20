@@ -2,6 +2,6 @@
 window.NOVARIS_SITE = {
   name: "Novaris Photo Guides",
   supportEmail: "buckenovaris@novarisguides.com",
-  siteUrl: "https://www.novarisguides.com",
+  siteUrl: "https://novaris-photo-guides.vercel.app",
   fieldKitPath: "/field-kit/"
 };

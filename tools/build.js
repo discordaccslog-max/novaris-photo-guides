@@ -10,6 +10,8 @@ import { fileURLToPath } from "node:url";
 import * as S from "./site-svg.js";
 import { PRODUCT_PAGES, MATRIX } from "./site-content.js";
 import { makeServiceWorker } from "./make-sw.js";
+import { pdfLibrarySection, pdfProductPage, previews } from "./pdf-pages.js";
+import { loadGuides } from "./make-catalog-pdfs.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const load = (rel) => { const ctx = { window: {} }; vm.createContext(ctx); vm.runInContext(fs.readFileSync(path.join(ROOT, rel), "utf8"), ctx); return ctx.window; };
@@ -21,7 +23,10 @@ const EMAIL = SITE.supportEmail;
 const MAIL = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
 const UPDATED = "November 13, 2026";
 const ISO_DATE = "2026-11-13";
-const GUIDES = PRODUCTS.filter((p) => p.productCode !== "CR");
+const FIELD_KIT = PRODUCTS.filter((p) => p.format !== "pdf");
+const PDFS = PRODUCTS.filter((p) => p.format === "pdf");
+const GUIDES = FIELD_KIT.filter((p) => p.productCode !== "CR");
+const CONTENT = Object.fromEntries((await loadGuides()).map((g) => [g.slug, g]));
 
 const esc = (s) => String(s).replace(/&(?!amp;|#)/g, "&amp;").replace(/"/g, "&quot;");
 const html = (s) => String(s).replace(/&(?!amp;|#)/g, "&amp;");
@@ -83,14 +88,15 @@ function footer() {
     <div class="footer-grid">
       <div>
         <p class="footer-brand">Novaris Photo Guides</p>
-        <p>Interactive photography field guides that run in your browser: shot lists, lighting diagrams, posing references, settings calculators, and planning worksheets.</p>
+        <p>Photography field guides for your phone and printable PDF guides: shot lists, lighting diagrams, posing references, settings, and planning worksheets.</p>
         <p>Support: <a href="mailto:${EMAIL}" data-support-email>${EMAIL}</a></p>
         <p><a href="/field-kit/#/start">Activate a license</a></p>
       </div>
       <nav aria-label="Guides">
         <p class="footer-heading">Guides</p>
         <ul class="footer-links footer-links-single">
-${PRODUCTS.map((q) => `          <li><a href="/${q.slug}.html">${html(q.name)}</a></li>`).join("\n")}
+${FIELD_KIT.map((q) => `          <li><a href="/${q.slug}.html">${html(q.name)}</a></li>`).join("\n")}
+          <li><a href="/index.html#pdf-guides">PDF guide library (${PDFS.length} guides)</a></li>
         </ul>
       </nav>
       <div class="footer-cols">
@@ -192,6 +198,7 @@ function filmstrip() {
 
 const homeFaq = [
   ["What do I get when I buy a guide?", `Instant access. After payment you're taken to a confirmation page that shows your license code and activates it in that browser, with an Open Field Kit button that goes straight into your guide. See the <a href="/delivery.html">Delivery Policy</a>.`],
+  ["What's the difference between Field Kit and PDF guides?", "Field Kit guides are interactive: they run in your browser, save your shot lists and worksheets, and unlock with a license code. PDF guides are printable files you download after payment, with optional add-ons such as pocket cards, planners, and templates."],
   ["Do the guides work on my phone, and offline?", "Yes. The Field Kit runs in any modern web browser on a phone, tablet, or computer. Install it to your home screen and, once it has loaded, your guides work offline on location."],
   ["Can I use one license on more than one device?", "Yes. Open the Field Kit on the other device and enter the same license code. A Complete Reference Library code unlocks all five guides."],
   ["What if I change my mind?", `You can request a full refund within 14 days of purchase, with no reason required, through the <a href="/contact.html">Contact page</a>. See the <a href="/refunds.html">Refund Policy</a>.`]
@@ -202,17 +209,17 @@ function home() {
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
     <div class="hero-intro">
-      <span class="eyebrow">Photography field guides &middot; In your browser</span>
+      <span class="eyebrow">Photography field guides &middot; On your phone and in print</span>
       <h1 id="hero-title"><span class="line"><span>Field guides for</span></span> <span class="line"><span>the shoot in</span></span> <span class="line"><span>front of you.</span></span></h1>
-      <p class="lede">Novaris Photo Guides are interactive photography field guides that run in your web browser and are built for use on a phone during a shoot. Each one holds shot lists you can tick off, lighting diagrams you can tap for setup notes, settings with an exposure calculator, and planning worksheets for one kind of photography. A license code unlocks your guide, and any page can be printed or saved as a PDF.</p>
+      <p class="lede">Novaris Photo Guides makes reference and planning guides for photographers, in two formats. Interactive Field Kit guides run in your web browser and are built for use on a phone during a shoot, unlocked with a license code. Printable PDF guides cover ${PDFS.length} more kinds of work, each with optional add-ons. Both hold shot lists, lighting diagrams, settings, and planning worksheets for one kind of photography.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="#guides">Browse the six guides</a>
+        <a class="btn btn-primary" href="#guides">Browse the guides</a>
         <a class="btn btn-ghost" href="/field-kit/">Open the Field Kit</a>
       </div>
       <ul class="hero-specs" aria-label="At a glance">
-        <li><strong>6</strong><span>guides</span></li>
-        <li><strong>Any</strong><span>device with a browser</span></li>
-        <li><strong>Offline</strong><span>once installed</span></li>
+        <li><strong>${PRODUCTS.length}</strong><span>guides</span></li>
+        <li><strong>6</strong><span>interactive</span></li>
+        <li><strong>${PDFS.length}</strong><span>printable PDFs</span></li>
         <li><strong>14</strong><span>day refunds</span></li>
       </ul>
     </div>
@@ -225,20 +232,22 @@ ${filmstrip()}
 <section class="section section-alt" id="guides" aria-labelledby="guides-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow"><span class="eyebrow-num">01</span>The guides</span>
-      <h2 id="guides-title">Six guides, one for each kind of work</h2>
-      <p>Each guide gathers the tools for one kind of photography. Open any guide to see everything it contains, live previews from the Field Kit, who it suits, and what you need, before you buy.</p>
+      <span class="eyebrow"><span class="eyebrow-num">01</span>Interactive Field Kit guides</span>
+      <h2 id="guides-title">Six interactive guides for your phone</h2>
+      <p>Field Kit guides run in your browser, work offline once installed, and unlock with a license code. Open any guide to see everything it contains, live previews, who it suits, and what you need, before you buy.</p>
     </div>
     <div class="card-grid">
-${PRODUCTS.map(productCard).join("\n")}
+${FIELD_KIT.map(productCard).join("\n")}
     </div>
   </div>
 </section>
 
+${pdfLibrarySection(PDFS)}
+
 <section class="section showcase-section" id="inside" aria-labelledby="inside-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow"><span class="eyebrow-num">02</span>Inside the Field Kit</span>
+      <span class="eyebrow"><span class="eyebrow-num">03</span>Inside the Field Kit</span>
       <h2 id="inside-title">Try it right here</h2>
       <p>These previews run the real Field Kit. Tap the parts of a lighting diagram, tick shots off a list, or change the date in the sun planner. Nothing you do in a preview is saved.</p>
     </div>
@@ -253,9 +262,9 @@ ${kitFrame("landscape-travel-field-guide", { view: "planning", item: "sun", capt
 <section class="section section-alt" id="included" aria-labelledby="included-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow"><span class="eyebrow-num">03</span>Included with every guide</span>
-      <h2 id="included-title">How the guides work</h2>
-      <p>Every guide runs in the same Field Kit, so they all work the same way.</p>
+      <span class="eyebrow"><span class="eyebrow-num">04</span>How the Field Kit works</span>
+      <h2 id="included-title">How the Field Kit guides work</h2>
+      <p>Every interactive guide runs in the same Field Kit, so they all work the same way.</p>
     </div>
     <div class="feature-grid">
       <div class="feature reveal" style="--stagger:0"><h3>Runs in your browser</h3><p>Works in any modern browser on a phone, tablet, or computer. There's nothing to download from an app store.</p></div>
@@ -284,15 +293,15 @@ ${MATRIX.map(([slug, name, c]) => `          <tr><th scope="row"><a href="/${slu
 <section class="section section-dark" id="how-it-works" aria-labelledby="how-title">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow"><span class="eyebrow-num">04</span>Purchase and delivery</span>
+      <span class="eyebrow"><span class="eyebrow-num">05</span>Purchase and delivery</span>
       <h2 id="how-title">How buying a guide works</h2>
       <p>Everything is digital and delivered instantly. There is no account to create and nothing is shipped.</p>
     </div>
     <ol class="steps">
       <li class="reveal" style="--stagger:0"><h3>Review the guide</h3><p>Each guide's page shows what it contains, live previews, the price, and who it is and isn't for.</p></li>
       <li class="reveal" style="--stagger:1"><h3>Agree and pay</h3><p>Tick that you agree to the Terms of Service and Refund Policy, then pay through the payment provider. Applicable taxes are shown at checkout.</p></li>
-      <li class="reveal" style="--stagger:2"><h3>Get your license</h3><p>Your confirmation page shows your license code and activates it in that browser. Open Field Kit takes you straight into your guide.</p></li>
-      <li class="reveal" style="--stagger:3"><h3>Use it anywhere</h3><p>Enter the same code in the Field Kit on your other devices, and install it to use offline on location.</p></li>
+      <li class="reveal" style="--stagger:2"><h3>Get your guide</h3><p>Field Kit guides: your confirmation page shows your license code and activates it. PDF guides: your download link, with any add-ons, is shown right after payment and emailed to you.</p></li>
+      <li class="reveal" style="--stagger:3"><h3>Use it anywhere</h3><p>Enter your Field Kit code on your other devices, or save and print your PDFs. Both work on location without a signal.</p></li>
     </ol>
     <p class="reveal" style="margin-top:2.5rem">Read the <a href="/delivery.html">Delivery Policy</a> and <a href="/refunds.html">Refund Policy</a> for the details.</p>
   </div>
@@ -301,7 +310,7 @@ ${MATRIX.map(([slug, name, c]) => `          <tr><th scope="row"><a href="/${slu
 <section class="section" id="faq-preview" aria-labelledby="faq-title">
   <div class="wrap narrow">
     <div class="section-head reveal">
-      <span class="eyebrow"><span class="eyebrow-num">05</span>Questions</span>
+      <span class="eyebrow"><span class="eyebrow-num">06</span>Questions</span>
       <h2 id="faq-title">Common questions</h2>
     </div>
     <div class="faq-list reveal">
@@ -497,7 +506,7 @@ function about() {
     lede: "We make interactive field guides for photographers. Each one gathers the shot lists, diagrams, calculators, and worksheets for one kind of photography into a tool you can use on your phone during a shoot.",
     content: `
     <h2>What we make</h2>
-    <p>Novaris Photo Guides sells five field guides, each covering one kind of photography, and a library that unlocks all five with one license. The guides cover <a href="/portrait-session-guide.html">portrait sessions</a>, <a href="/wedding-day-guide.html">wedding days</a>, <a href="/product-photography-guide.html">product photography</a>, <a href="/landscape-travel-field-guide.html">landscape and travel</a>, and <a href="/event-coverage-guide.html">event coverage</a>.</p>
+    <p>Novaris Photo Guides sells guides in two formats. Five interactive field guides, each covering one kind of photography, run in the Field Kit, with a library that unlocks all five with one license. A further ${PDFS.length} printable PDF guides cover kinds of work from newborn sessions to drone planning, each with optional add-ons; see the <a href="/index.html#pdf-guides">PDF guide library</a>. The interactive guides cover <a href="/portrait-session-guide.html">portrait sessions</a>, <a href="/wedding-day-guide.html">wedding days</a>, <a href="/product-photography-guide.html">product photography</a>, <a href="/landscape-travel-field-guide.html">landscape and travel</a>, and <a href="/event-coverage-guide.html">event coverage</a>.</p>
     <p>The guides run in the <a href="/field-kit/">Novaris Field Kit</a>, a web app that works in any modern browser on a phone, tablet, or computer. Inside are the things a photographer reaches for while planning or working: shot lists you can tick off, lighting diagrams you can tap to see what each light does, posing references, settings tables with an exposure calculator, a sunrise and sunset planner, and planning worksheets. Which of these a guide contains depends on the kind of photography; each guide's page lists exactly what's inside.</p>
 
     <h2>Why a field guide on your phone</h2>
@@ -517,7 +526,7 @@ function about() {
     <p>The guides are reference and planning tools. They aren't courses, video lessons, coaching, or critique, and they don't include feedback on anyone's photographs. The <a href="/disclaimer.html">Disclaimer</a> covers this in more detail.</p>
 
     <h2>How we sell</h2>
-    <p>Prices are listed in US dollars on each guide's page, and applicable taxes are shown at checkout. Payment is handled by a third-party payment provider, so we never see your full card details. Your license code appears on your confirmation page as soon as payment is complete. If a guide isn't right for you, you can ask for a full refund within 14 days, with no reason required.</p>
+    <p>Prices are listed in US dollars on each guide's page, and applicable taxes are shown at checkout. Payment is handled by a third-party payment provider, so we never see your full card details. Field Kit license codes appear on your confirmation page as soon as payment is complete, and PDF guides are delivered by download link right after payment. If a guide isn't right for you, you can ask for a full refund within 14 days, with no reason required.</p>
     <p>This website uses no cookies, no analytics, and no advertising trackers. The <a href="/privacy.html">Privacy Policy</a> explains what information we receive when you buy and how we use it.</p>
 
     <h2>Get in touch</h2>
@@ -527,10 +536,17 @@ function about() {
 
 const faqGroups = [
   ["Buying and delivery", [
-    ["What do I receive after I buy, and how?", `<p>As soon as payment is complete, you're shown a confirmation page. It shows your product, the date and time, your order reference when the payment provider supplies one, and your license code. The code is activated automatically in that browser, and the <strong>Open Field Kit</strong> button takes you straight into your guide. You can save the confirmation as a PDF or print it. Nothing is shipped. See the <a href="/delivery.html">Delivery Policy</a>.</p>`],
+    ["What do I receive after I buy a Field Kit guide?", `<p>As soon as payment is complete, you're shown a confirmation page. It shows your product, the date and time, your order reference when the payment provider supplies one, and your license code. The code is activated automatically in that browser, and the <strong>Open Field Kit</strong> button takes you straight into your guide. You can save the confirmation as a PDF or print it. Nothing is shipped. See the <a href="/delivery.html">Delivery Policy</a>.</p>`],
     ["Who handles payment, and are taxes included?", `<p>Payment is handled at checkout by a third-party payment provider; Novaris Photo Guides never sees your full card details. Prices are shown in US dollars, and applicable taxes are calculated and shown at checkout before you pay.</p>`],
     ["Why do I have to tick a box before buying?", `<p>Before checkout you confirm that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, so the license terms and the 14-day refund are clear before you pay.</p>`],
     ["What does the Complete Reference Library include?", `<p>All five guides: Portrait Session, Wedding Day, Product Photography, Landscape &amp; Travel Field, and Event Coverage. One license code unlocks all of them in the Field Kit.</p>`]
+  ]],
+  ["PDF guides and add-ons", [
+    ["What's in a PDF guide?", `<p>Each PDF guide is a printable reference for one kind of photography: shot lists with tick boxes, overhead lighting or position diagrams, settings tables, planning worksheets, and checklists. Each guide's page lists every section and shows excerpts before you buy.</p>`],
+    ["How do I receive a PDF guide?", `<p>Right after payment, your download link is shown on the checkout confirmation and sent to the email address you used at checkout. Any add-ons you chose are delivered with the guide. See the <a href="/delivery.html">Delivery Policy</a>.</p>`],
+    ["What are add-ons?", `<p>Add-ons are extra PDFs, such as pocket settings cards, planners, questionnaires, and message templates, that you can tick on a guide's page when you buy. The price box shows the total with the add-ons you choose.</p>`],
+    ["What page size are PDF guides?", `<p>US Letter (8.5 × 11 in). They print on A4 using "fit to page." Pocket card add-ons are 4 × 6 in. The Wedding &amp; Portrait Pro Bundle has an add-on with A4 editions of every guide.</p>`],
+    ["Can I print PDF guides and share worksheets with clients?", `<p>Yes. You can print them as often as you need for your own work and share client worksheets and questionnaires with your own clients. Please don't share or resell the files themselves. See the <a href="/terms.html">Terms of Service</a>.</p>`]
   ]],
   ["Licenses and devices", [
     ["How do licenses work?", `<p>Each purchase comes with a license code that starts with NOVA. Entering it in the Field Kit unlocks your guide in that browser. Codes are checked on your device; there's no account or password. Capitals, spaces, and dashes don't matter when you type a code.</p>`],
@@ -633,7 +649,11 @@ function terms() {
     <p>By using this website or the Field Kit, or by buying a license, you agree to these Terms of Service, together with our <a href="/privacy.html">Privacy Policy</a>, <a href="/refunds.html">Refund Policy</a>, <a href="/delivery.html">Delivery Policy</a>, and <a href="/disclaimer.html">Disclaimer</a>. Before checkout, you confirm that you agree to these Terms and the Refund Policy by ticking a box beside the buy button. If you don't agree, please don't buy a license or use the guides.</p>
 
     <h2>2. What we sell</h2>
-    <p>We sell licenses to browser-based photography field guides. The guides run in the Novaris Field Kit, a web app on this website, and are unlocked with a license code. They contain reference and planning tools such as shot lists, lighting diagrams, posing references, settings tables and calculators, sun times, worksheets, and questionnaires, and they can export pages as PDFs.</p>
+    <p>We sell licenses to two kinds of digital photography guides:</p>
+    <ul>
+      <li><strong>Field Kit guides</strong>: browser-based guides that run in the Novaris Field Kit, a web app on this website, unlocked with a license code. They contain reference and planning tools such as shot lists, lighting diagrams, posing references, settings tables and calculators, sun times, worksheets, and questionnaires, and they can export pages as PDFs.</li>
+      <li><strong>PDF guides</strong>: printable PDF files delivered by download, containing shot lists, diagrams, settings tables, worksheets, and checklists. PDF guides may be bought with optional add-ons, which are additional PDF files.</li>
+    </ul>
     <p>The guides are reference and planning tools. They are not courses, lessons, coaching, or critique, and they do not include feedback on your work.</p>
 
     <h2>3. Your license</h2>
@@ -641,8 +661,9 @@ function terms() {
     <ul>
       <li>use the guide for personal and commercial purposes in your own photography work, including paid client sessions;</li>
       <li>use the guide on the devices you use yourself, by entering your license code in the Field Kit on each one;</li>
-      <li>print and export pages from the guide for your own use;</li>
-      <li>share the client questionnaires, including PDFs exported from them, with your own clients.</li>
+      <li>download, print, and export pages from the guide for your own use, as often as you need;</li>
+      <li>keep copies of PDF guides on the devices you use yourself;</li>
+      <li>share client questionnaires and client worksheets, including printed or exported copies, with your own clients.</li>
     </ul>
     <p>Buying a license gives you the right to use the guide. It does not transfer ownership of the guide or its content.</p>
 
@@ -666,7 +687,7 @@ function terms() {
     <p>Licenses are delivered digitally and immediately, as described in our <a href="/delivery.html">Delivery Policy</a>.</p>
 
     <h2>8. Refunds</h2>
-    <p>Refunds are available as described in our <a href="/refunds.html">Refund Policy</a>, including a full refund on any purchase requested within 14 days. When a purchase is refunded, its license ends and you must stop using that guide. If you are a consumer in the EU or UK, please also see <a href="/consumer-rights.html">Consumer rights</a>.</p>
+    <p>Refunds are available as described in our <a href="/refunds.html">Refund Policy</a>, including a full refund on any purchase requested within 14 days. When a purchase is refunded, its license ends and you must stop using that guide and delete any copies of its files. If you are a consumer in the EU or UK, please also see <a href="/consumer-rights.html">Consumer rights</a>.</p>
 
     <h2>9. Ownership</h2>
     <p>All content in the guides, the Field Kit, and this website, including text, layouts, diagrams, illustrations, and software, is owned by Novaris Photo Guides and protected by copyright and other intellectual property laws. Except for the license in section 3, no rights are given to you.</p>
@@ -771,7 +792,7 @@ function refunds() {
     <p>Refunds go back to your original payment method. We issue the refund within 5 business days of your request. Your payment provider or bank may take a few additional days to show it on your statement.</p>
 
     <h2>What happens to your license</h2>
-    <p>When a purchase is refunded, its license ends. Please stop using that guide and remove the license from the Field Kit on your devices (Field Kit settings, Licenses). There's nothing to send back.</p>
+    <p>When a purchase is refunded, its license ends. For Field Kit guides, please stop using the guide and remove the license from the Field Kit on your devices (Field Kit settings, Licenses). For PDF guides and add-ons, please delete your copies of the files. There's nothing to send back.</p>
 
     <h2>If something doesn't work</h2>
     <p>If a guide isn't working on your device, tell us what's happening through the <a href="/contact.html">Contact page</a>. We'll try to fix it with you; whatever happens, you can still have a full refund within 14 days.</p>
@@ -792,16 +813,24 @@ function delivery() {
     eyebrow: "Policy", h1: "Delivery Policy", updated: true,
     content: `
     <div class="callout">
-      <p><strong>All products are digital and delivered instantly as a license to a browser-based field guide.</strong> There is no physical shipment.</p>
+      <p><strong>All products are digital and delivered instantly.</strong> Field Kit guides are delivered as a license code; PDF guides and their add-ons are delivered by download. There is no physical shipment.</p>
     </div>
 
-    <h2>How delivery works</h2>
+    <h2>Field Kit guides: how delivery works</h2>
     <ol>
       <li><strong>Agree and pay.</strong> On the guide's page, you tick that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, then pay through the payment provider's checkout.</li>
       <li><strong>Confirmation page.</strong> As soon as payment is complete, you're shown a confirmation page. It states that your order is complete, shows your product, the date and time, your order reference when the payment provider supplies one, and your license code, and it activates the license in that browser automatically. You can save the confirmation as a PDF or print it.</li>
       <li><strong>Open your guide.</strong> The Open Field Kit button takes you straight into your guide in the Novaris Field Kit.</li>
       <li><strong>Other devices.</strong> To use your guide on another phone, tablet, or computer, open the <a href="/field-kit/">Field Kit</a> there and enter the same license code.</li>
     </ol>
+
+    <h2>PDF guides: how delivery works</h2>
+    <ol>
+      <li><strong>Choose and pay.</strong> On the guide's page, tick any add-ons you want, tick that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, then pay through the payment provider's checkout.</li>
+      <li><strong>Download.</strong> As soon as payment is complete, your download link is shown on the checkout confirmation and sent to the email address you entered at checkout. It includes the guide and every add-on you chose.</li>
+      <li><strong>Keep your files.</strong> Save the PDFs to your devices. They open in any PDF viewer and work without a connection.</li>
+    </ol>
+    <p>If your download email hasn't arrived within an hour, check your spam folder, then contact us through the <a href="/contact.html">Contact page</a> with your order number and we'll send your files again.</p>
 
     <h2>Offline use</h2>
     <p>Once the Field Kit has loaded on a device while online, you can install it to the home screen and use your guides offline on location.</p>
@@ -866,7 +895,7 @@ function consumerRights() {
     <p>You are buying from Novaris Photo Guides. You can reach us by email at ${MAIL} or through our <a href="/contact.html">Contact page</a>. Payment is taken by a third-party payment provider at checkout.</p>
 
     <h2>What you are buying</h2>
-    <p>Each purchase is a license to digital content: a browser-based field guide in the Novaris Field Kit, unlocked by a license code. It is supplied immediately after payment on the order confirmation page. Each guide's page describes its contents and functionality and lists what you need to use it (a modern web browser on a phone, tablet, or computer).</p>
+    <p>Each purchase is a license to digital content: either a browser-based field guide in the Novaris Field Kit, unlocked by a license code and supplied on the order confirmation page, or a printable PDF guide (with any add-ons you choose), supplied by download link straight after payment. Both are supplied immediately after payment. Each guide's page describes its contents and functionality and lists what you need to use it (a modern web browser on a phone, tablet, or computer).</p>
 
     <h2>Price and taxes</h2>
     <p>Prices are shown in US dollars. Applicable taxes, such as VAT or sales tax, are calculated for your location and shown at checkout before you pay, together with the total you will be charged.</p>
@@ -957,9 +986,15 @@ function thankYou(p) {
 /* ---------- Run ---------- */
 
 home();
-PRODUCTS.forEach(productPage);
+FIELD_KIT.forEach(productPage);
+const bundleGuides = [
+  { name: "Wedding Day Guide (PDF edition)", href: "/wedding-day-guide.html", text: "A full-day shot list by phase, a timeline, a family formals grouping planner, a venue scouting worksheet, a gear checklist, a client questionnaire, and settings." },
+  { name: "Portrait Session Guide (PDF edition)", href: "/portrait-session-guide.html", text: "Shot lists for headshot, family, and couples sessions, six lighting setups, twelve posing references, settings, a planning sheet, and a client questionnaire." },
+  ...["engagement-session-guide", "elopement-small-wedding-guide", "newborn-baby-session-guide", "maternity-portrait-guide", "large-group-reunion-guide"].map((slug) => { const q = PDFS.find((x) => x.slug === slug); return { name: q.name, href: "/" + slug + ".html", text: q.short }; })
+];
+PDFS.forEach((p) => pdfProductPage(p, CONTENT[p.slug], { pageDoc, write, PRODUCTS, MAIL, extra: p.slug === "wedding-portrait-pro-bundle" ? { bundleGuides, bundlePreviews: ["engagement-session-guide", "newborn-baby-session-guide", "large-group-reunion-guide"].map((slug, k) => previews(CONTENT[slug])[k % 2]) } : {} }));
 about(); faq(); contact(); terms(); privacy(); refunds(); delivery(); disclaimer(); consumerRights(); notFound();
-PRODUCTS.forEach(thankYou);
+FIELD_KIT.forEach(thankYou);
 
 const pages = ["/", "/about.html", "/faq.html", "/contact.html", ...PRODUCTS.map((p) => `/${p.slug}.html`), "/terms.html", "/privacy.html", "/refunds.html", "/delivery.html", "/disclaimer.html", "/consumer-rights.html"];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>

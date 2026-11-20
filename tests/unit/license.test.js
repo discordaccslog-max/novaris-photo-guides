@@ -144,7 +144,9 @@ test("a Complete Reference Library code unlocks all five guides", () => {
 });
 
 test("js/products.js matches the license system and fixed prices", () => {
-  const { NOVARIS_PRODUCTS } = loadClassicScript("js/products.js");
+  const ALL = loadClassicScript("js/products.js").NOVARIS_PRODUCTS;
+  assert.equal(ALL.length, 31);
+  const NOVARIS_PRODUCTS = ALL.filter((p) => p.format !== "pdf");
   assert.equal(NOVARIS_PRODUCTS.length, 6);
   for (const p of NOVARIS_PRODUCTS) {
     assert.equal(codeForSlug(p.slug), p.productCode, p.slug);
@@ -157,6 +159,22 @@ test("js/products.js matches the license system and fixed prices", () => {
     "portrait-session-guide": 34, "wedding-day-guide": 52, "product-photography-guide": 39,
     "landscape-travel-field-guide": 29, "event-coverage-guide": 44, "complete-reference-library": 119
   });
+});
+
+test("js/products.js PDF guides have prices and add-ons in range", () => {
+  const pdfs = loadClassicScript("js/products.js").NOVARIS_PRODUCTS.filter((p) => p.format === "pdf");
+  assert.equal(pdfs.length, 25);
+  assert.equal(new Set(pdfs.map((p) => p.slug)).size, 25);
+  for (const p of pdfs) {
+    assert.ok(p.price >= 20 && p.price <= 145, p.slug);
+    assert.ok(["portraits", "weddings", "commercial", "outdoors", "events"].includes(p.category), p.slug);
+    assert.ok(p.options.length >= 3 && p.options.length <= 4, p.slug);
+    assert.equal(p.checkoutUrl, "");
+    for (const o of p.options) {
+      assert.match(o.id, /^[a-z0-9-]+$/);
+      assert.ok(o.price >= 1 && o.price <= 5, o.id);
+    }
+  }
 });
 
 test("site config holds the support email", () => {

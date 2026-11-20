@@ -15,11 +15,14 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.join(ROOT, "fulfillment-kit");
 const SHOTS = path.join(OUT, "screenshots");
 const load = (rel) => { const ctx = { window: {} }; vm.createContext(ctx); vm.runInContext(fs.readFileSync(path.join(ROOT, rel), "utf8"), ctx); return ctx.window; };
-const { NOVARIS_PRODUCTS: PRODUCTS } = load("js/products.js");
+const { NOVARIS_PRODUCTS: CATALOG } = load("js/products.js");
+// The screenshot flow covers the Field Kit products; PDF guides are delivered by the payment provider.
+const PRODUCTS = CATALOG.filter((p) => p.format !== "pdf");
+const PDFS = CATALOG.filter((p) => p.format === "pdf");
 const { NOVARIS_SITE: SITE } = load("js/site-config.js");
 const BASE = SITE.siteUrl.replace(/\/$/, "");
 const DATE = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-const CHECKOUT_READY = PRODUCTS.every((p) => /^https:\/\//.test(p.checkoutUrl || ""));
+const CHECKOUT_READY = CATALOG.every((p) => /^https:\/\//.test(p.checkoutUrl || ""));
 const PHONE = { ...devices["iPhone 13"], locale: "en-US", timezoneId: "America/New_York" };
 const DESKTOP = { viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1, locale: "en-US", timezoneId: "America/New_York" };
 
@@ -285,12 +288,15 @@ function summaryText(reviewerCodes) {
   L("Hosting: the website is a static site hosted on Vercel.");
   L();
   L("WHAT WE SELL");
-  L("Licenses to interactive photography field guides that run in the web browser on phones, tablets, and computers. The guides live in the Novaris Field Kit, a web app on our website, and are unlocked with a license code. They contain reference and planning tools: shot lists, lighting diagrams, posing references, settings tables with an exposure calculator, a sunrise and sunset planner, planning worksheets, and client questionnaires, with PDF export and printing. All products are digital; nothing is shipped.");
+  L("Two kinds of digital photography guides. (1) Field Kit guides: licenses to interactive photography field guides that run in the web browser on phones, tablets, and computers. The guides live in the Novaris Field Kit, a web app on our website, and are unlocked with a license code. They contain reference and planning tools: shot lists, lighting diagrams, posing references, settings tables with an exposure calculator, a sunrise and sunset planner, planning worksheets, and client questionnaires, with PDF export and printing. (2) PDF guides: printable PDF reference and planning guides, each with optional add-ons (extra PDFs such as pocket cards, planners, and templates) chosen on the product page. All products are digital; nothing is shipped.");
   L();
   L("Products and prices (USD; applicable taxes are shown at checkout):");
+  L("Field Kit guides:");
   for (const p of PRODUCTS) L(`- ${p.name}: $${p.price} (${cite(BASE + "/" + p.slug + ".html")})`);
+  L("PDF guides (add-ons $1 to $5 each):");
+  for (const p of PDFS) L(`- ${p.name}: $${p.price}, add-ons: ${p.options.map((o) => `${o.name} $${o.price}`).join(", ")} (${cite(BASE + "/" + p.slug + ".html")})`);
   L();
-  L("HOW PRODUCTS ARE DELIVERED");
+  L("HOW FIELD KIT GUIDES ARE DELIVERED");
   L(CHECKOUT_READY
     ? "1. On the product page the buyer ticks a box agreeing to the Terms of Service and Refund Policy, then pays through the payment provider's checkout."
     : "1. On the product page, the buy button opens the payment provider's checkout after the buyer ticks a required box agreeing to the Terms of Service and Refund Policy. Buy buttons appear on each product page once its checkout link is added.");
@@ -298,6 +304,11 @@ function summaryText(reviewerCodes) {
   L("3. The Open Field Kit button takes the buyer straight into the purchased guide.");
   L(`4. To use the guide on another device, the buyer opens the Field Kit (${cite(BASE + "/field-kit/")}) and enters the same license code.`);
   L("Delivery is immediate. There is no physical shipment and no shipping charge.");
+  L();
+  L("HOW PDF GUIDES ARE DELIVERED");
+  L("1. On the product page the buyer ticks any add-ons they want (the price box shows the total), ticks the box agreeing to the Terms of Service and Refund Policy, then pays through the payment provider's checkout. Chosen add-ons are passed to checkout in the link (?addons=...).");
+  L("2. Right after payment, the payment provider shows a download link for the guide and every chosen add-on and emails it to the buyer.");
+  L(`3. If the email doesn't arrive, the buyer contacts support with the order number and the files are sent again (${cite(BASE + "/delivery.html")}).`);
   L();
   L("REPLACEMENT LICENSES");
   L(`Buyers who lose a code contact ${SITE.supportEmail} with their order number and checkout email. When the payment provider includes its order ID in the confirmation page address, the code is derived from that order ID, so support reissues the identical code from the order reference; otherwise support issues a new valid code for the purchased product. Codes activated on a device are also listed in the Field Kit's settings.`);

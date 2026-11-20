@@ -1,9 +1,13 @@
 import { test, expect } from "@playwright/test";
 import fs from "node:fs";
 import path from "node:path";
+import vm from "node:vm";
+
+const catalog = () => { const ctx = { window: {} }; vm.createContext(ctx); vm.runInContext(fs.readFileSync(path.resolve("js/products.js"), "utf8"), ctx); return ctx.window.NOVARIS_PRODUCTS; };
+const PDF_PAGES = catalog().filter((p) => p.format === "pdf").map((p) => `/${p.slug}.html`);
 
 const PAGES = ["/", "/about.html", "/faq.html", "/contact.html", "/terms.html", "/privacy.html", "/refunds.html", "/delivery.html", "/disclaimer.html", "/consumer-rights.html",
-  "/portrait-session-guide.html", "/wedding-day-guide.html", "/product-photography-guide.html", "/landscape-travel-field-guide.html", "/event-coverage-guide.html", "/complete-reference-library.html"];
+  "/portrait-session-guide.html", "/wedding-day-guide.html", "/product-photography-guide.html", "/landscape-travel-field-guide.html", "/event-coverage-guide.html", "/complete-reference-library.html", ...PDF_PAGES];
 
 test("no buy button or checkbox shows while checkout links are empty", async ({ page }) => {
   await page.goto("/portrait-session-guide.html");
@@ -33,6 +37,46 @@ test("with a checkout link, buy buttons stay disabled until the terms box is tic
   await expect(box.locator(".buy-hint")).toBeHidden();
   // The closing buy area follows the same choice.
   await expect(page.locator(".closing-buy .buy-check input")).toBeChecked();
+});
+
+test("PDF guides: add-ons update the total and are passed to checkout", async ({ page }) => {
+  // Test-only: serve a catalog with a checkout link to exercise the add-ons.
+  await page.route("**/js/products.js", async (route) => {
+    const body = fs.readFileSync(path.resolve("js/products.js"), "utf8").replace(/("outfit-planning-sheet",[^\]]*\],\s+checkoutUrl: )""/, '$1"https://checkout.invalid/engagement"');
+    await route.fulfill({ body, contentType: "text/javascript" });
+  });
+  await page.goto("/engagement-session-guide.html");
+  const box = page.locator(".buy-box");
+  await expect(box.locator("[data-total]")).toHaveText("$30");
+  await expect(page.locator(".addon")).toHaveCount(4);
+  await box.locator(".buy-check input").check();
+  const button = box.locator(".buy-button");
+  await expect(button).toHaveAttribute("href", "https://checkout.invalid/engagement");
+  await expect(button).toHaveText("Buy Engagement Session Guide — $30");
+  await page.locator("label[for='addon-couple-questionnaire']").click();
+  await page.locator("label[for='addon-prompt-card-deck']").click();
+  await expect(box.locator("[data-total]")).toHaveText("$35");
+  await expect(button).toHaveText("Buy Engagement Session Guide + 2 add-ons — $35");
+  await expect(button).toHaveAttribute("href", "https://checkout.invalid/engagement?addons=couple-questionnaire%2Cprompt-card-deck");
+  await expect(page.locator(".closing-buy .buy-button")).toHaveAttribute("href", /addons=couple-questionnaire%2Cprompt-card-deck$/);
+  await page.locator("label[for='addon-couple-questionnaire']").click();
+  await expect(box.locator("[data-total]")).toHaveText("$33");
+  await expect(button).toHaveAttribute("href", "https://checkout.invalid/engagement?addons=prompt-card-deck");
+});
+
+test("PDF guide library lists every PDF guide and filters by category", async ({ page }) => {
+  await page.goto("/index.html#pdf-guides");
+  const grid = page.locator("[data-filter-grid]");
+  await expect(grid.locator(".card")).toHaveCount(PDF_PAGES.length);
+  await expect(page.locator(".chip-filters")).toBeVisible();
+  await page.locator(".chip-filter[data-filter='weddings']").click();
+  await expect(page.locator(".chip-filter[data-filter='weddings']")).toHaveAttribute("aria-pressed", "true");
+  await expect(grid.locator(".card:visible")).toHaveCount(3);
+  await page.locator(".chip-filter[data-filter='all']").click();
+  await expect(grid.locator(".card:visible")).toHaveCount(PDF_PAGES.length);
+  // PDF product pages carry no license-code wording in the buy box.
+  await page.goto("/drone-aerial-planning-guide.html");
+  await expect(page.locator(".price-meta").first()).toHaveText("Instant PDF download · 14-day refund policy · Applicable taxes are shown at checkout.");
 });
 
 test("every internal link and asset on every page resolves", async ({ page, request }) => {

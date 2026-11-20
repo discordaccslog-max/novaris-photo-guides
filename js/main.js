@@ -46,11 +46,45 @@
     var boxes = [];
     var links = [];
     var hints = [];
+
+    /*
+      PDF guides: ticked add-ons raise the shown total and are passed to
+      checkout as ?addons=id1,id2 (prices come from product.options).
+    */
+    var options = Array.isArray(product.options) ? product.options : [];
+    var addonBoxes = Array.prototype.slice.call(scope.querySelectorAll("[data-addon]"));
+    function selectedAddons() {
+      return addonBoxes.filter(function (b) { return b.checked; }).map(function (b) {
+        for (var i = 0; i < options.length; i++) if (options[i].id === b.value) return options[i];
+        return null;
+      }).filter(Boolean);
+    }
+    function total() {
+      return selectedAddons().reduce(function (sum, o) { return sum + Number(o.price); }, Number(product.price));
+    }
+    function buyUrl() {
+      var ids = selectedAddons().map(function (o) { return o.id; });
+      if (!ids.length) return url;
+      return url + (url.indexOf("?") === -1 ? "?" : "&") + "addons=" + encodeURIComponent(ids.join(","));
+    }
+    function buyText() {
+      var n = selectedAddons().length;
+      return "Buy " + product.name + (n ? " + " + n + (n === 1 ? " add-on" : " add-ons") : "") + " — " + formatPrice(total());
+    }
+    function refreshTotal() {
+      scope.querySelectorAll("[data-total]").forEach(function (el) { el.textContent = formatPrice(total()); });
+      links.forEach(function (link) {
+        link.textContent = buyText();
+        if (link.hasAttribute("href")) link.href = buyUrl();
+      });
+    }
+    addonBoxes.forEach(function (b) { b.addEventListener("change", refreshTotal); });
+
     function setAgreed(agreed) {
       boxes.forEach(function (b) { b.checked = agreed; });
       links.forEach(function (link) {
         if (agreed) {
-          link.href = url;
+          link.href = buyUrl();
           link.removeAttribute("aria-disabled");
           link.classList.remove("is-disabled");
         } else {
@@ -84,7 +118,7 @@
       link.rel = "noopener";
       link.setAttribute("role", "link");
       link.tabIndex = 0;
-      link.textContent = "Buy " + product.name + " — " + formatPrice(product.price);
+      link.textContent = buyText();
       var hint = document.createElement("p");
       hint.className = "buy-hint";
       hint.id = hintId;
@@ -105,6 +139,31 @@
       hints.push(hint);
     });
     if (url) setAgreed(false);
+    refreshTotal();
+  });
+
+  /* ---------- PDF library: category filter chips ---------- */
+
+  document.querySelectorAll("[data-filter-grid]").forEach(function (grid) {
+    var section = grid.closest("section") || document;
+    var bar = section.querySelector(".chip-filters");
+    if (!bar) return;
+    var chips = Array.prototype.slice.call(bar.querySelectorAll("[data-filter]"));
+    bar.hidden = false;
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        var filter = chip.getAttribute("data-filter");
+        chips.forEach(function (c) {
+          var on = c === chip;
+          c.classList.toggle("is-on", on);
+          c.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        grid.querySelectorAll("[data-category]").forEach(function (card) {
+          card.hidden = filter !== "all" && card.getAttribute("data-category") !== filter;
+          if (!card.hidden) card.classList.add("is-visible");
+        });
+      });
+    });
   });
 
   /* ---------- Current year in the footer ---------- */
