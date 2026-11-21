@@ -9,59 +9,79 @@ const PDF_PAGES = catalog().filter((p) => p.format === "pdf").map((p) => `/${p.s
 const PAGES = ["/", "/about.html", "/faq.html", "/contact.html", "/terms.html", "/privacy.html", "/refunds.html", "/delivery.html", "/disclaimer.html", "/consumer-rights.html",
   "/portrait-session-guide.html", "/wedding-day-guide.html", "/product-photography-guide.html", "/landscape-travel-field-guide.html", "/event-coverage-guide.html", "/complete-reference-library.html", ...PDF_PAGES];
 
-test("no buy button or checkbox shows while checkout links are empty", async ({ page }) => {
+test("every product page has an Add to cart button and no direct buy link", async ({ page }) => {
   await page.goto("/portrait-session-guide.html");
   await expect(page.locator(".price-meta").first()).toHaveText("Instant access with a license · 14-day refund policy · Applicable taxes are shown at checkout.");
+  await expect(page.locator(".buy-box .cart-button")).toHaveText("Add to cart — $34");
+  await expect(page.locator(".closing-buy .cart-button")).toHaveCount(1);
   await expect(page.locator(".buy-button")).toHaveCount(0);
-  await expect(page.locator(".buy-check")).toHaveCount(0);
-  await expect(page.locator(".buy-slot").first()).toBeEmpty();
+  await expect(page.locator(".header-cart [data-cart-count]")).toBeHidden();
 });
 
-test("with a checkout link, buy buttons stay disabled until the terms box is ticked", async ({ page }) => {
-  // Test-only: serve a catalog with a checkout link to exercise the buy box.
-  await page.route("**/js/products.js", async (route) => {
-    const body = fs.readFileSync(path.resolve("js/products.js"), "utf8").replace('confirmationPath: "/thank-you/wedding-day-guide/",\n    checkoutUrl: ""', 'confirmationPath: "/thank-you/wedding-day-guide/",\n    checkoutUrl: "https://checkout.invalid/wedding"');
-    await route.fulfill({ body, contentType: "text/javascript" });
-  });
-  await page.goto("/wedding-day-guide.html");
-  const box = page.locator(".buy-box");
-  await expect(box.locator(".buy-check")).toContainText("I agree to the Terms of Service and Refund Policy");
-  await expect(box.locator(".buy-check a[href='/terms.html']")).toHaveCount(1);
-  await expect(box.locator(".buy-check a[href='/refunds.html']")).toHaveCount(1);
-  const button = box.locator(".buy-button");
-  await expect(button).toHaveAttribute("aria-disabled", "true");
-  await expect(button).not.toHaveAttribute("href", /.+/);
-  await expect(box.locator(".buy-hint")).toBeVisible();
-  await box.locator(".buy-check input").check();
-  await expect(button).toHaveAttribute("href", "https://checkout.invalid/wedding");
-  await expect(box.locator(".buy-hint")).toBeHidden();
-  // The closing buy area follows the same choice.
-  await expect(page.locator(".closing-buy .buy-check input")).toBeChecked();
-});
-
-test("PDF guides: add-ons update the total and are passed to checkout", async ({ page }) => {
-  // Test-only: serve a catalog with a checkout link to exercise the add-ons.
-  await page.route("**/js/products.js", async (route) => {
-    const body = fs.readFileSync(path.resolve("js/products.js"), "utf8").replace(/("outfit-planning-sheet",[^\]]*\],\s+checkoutUrl: )""/, '$1"https://checkout.invalid/engagement"');
-    await route.fulfill({ body, contentType: "text/javascript" });
-  });
+test("cart: add guides with add-ons, change them, and remove them", async ({ page }) => {
   await page.goto("/engagement-session-guide.html");
   const box = page.locator(".buy-box");
-  await expect(box.locator("[data-total]")).toHaveText("$30");
+  const button = box.locator(".cart-button");
   await expect(page.locator(".addon")).toHaveCount(4);
-  await box.locator(".buy-check input").check();
-  const button = box.locator(".buy-button");
-  await expect(button).toHaveAttribute("href", "https://checkout.invalid/engagement");
-  await expect(button).toHaveText("Buy Engagement Session Guide — $30");
+  await expect(box.locator("[data-total]")).toHaveText("$30");
   await page.locator("label[for='addon-couple-questionnaire']").click();
   await page.locator("label[for='addon-prompt-card-deck']").click();
   await expect(box.locator("[data-total]")).toHaveText("$35");
-  await expect(button).toHaveText("Buy Engagement Session Guide + 2 add-ons — $35");
-  await expect(button).toHaveAttribute("href", "https://checkout.invalid/engagement?addons=couple-questionnaire%2Cprompt-card-deck");
-  await expect(page.locator(".closing-buy .buy-button")).toHaveAttribute("href", /addons=couple-questionnaire%2Cprompt-card-deck$/);
+  await expect(button).toHaveText("Add to cart with 2 add-ons — $35");
+  await button.click();
+  await expect(button).toHaveText("View cart");
+  await expect(box.locator(".cart-status")).toHaveText("In your cart.");
+  await expect(page.locator(".header-cart [data-cart-count]")).toHaveText("1");
+  // Changing add-ons offers an update; the cart keeps the saved choice until then.
   await page.locator("label[for='addon-couple-questionnaire']").click();
-  await expect(box.locator("[data-total]")).toHaveText("$33");
-  await expect(button).toHaveAttribute("href", "https://checkout.invalid/engagement?addons=prompt-card-deck");
+  await expect(button).toHaveText("Update cart with 1 add-on — $33");
+  await button.click();
+  await expect(button).toHaveText("View cart");
+  // Add-ons are restored from the cart on the next visit.
+  await page.reload();
+  await expect(page.locator("#addon-prompt-card-deck")).toBeChecked();
+  await expect(page.locator("#addon-couple-questionnaire")).not.toBeChecked();
+
+  await page.goto("/wedding-day-guide.html");
+  await page.locator(".buy-box .cart-button").click();
+  await expect(page.locator(".header-cart [data-cart-count]")).toHaveText("2");
+
+  await page.goto("/cart.html");
+  const items = page.locator(".cart-item");
+  await expect(items).toHaveCount(2);
+  await expect(items.first()).toContainText("Engagement Session Guide");
+  await expect(items.first()).toContainText("+ Prompt card deck");
+  await expect(items.first().locator(".cart-item-total")).toHaveText("$33");
+  await expect(page.locator("[data-cart-subtotal]")).toHaveText("$85");
+  await expect(items.first().locator("a[href='/engagement-session-guide.html#add-ons']")).toHaveText("Change add-ons");
+  await page.getByRole("button", { name: "Remove Wedding Day Guide from your cart" }).click();
+  await expect(items).toHaveCount(1);
+  await expect(page.locator("[data-cart-subtotal]")).toHaveText("$33");
+  await expect(page.locator(".header-cart [data-cart-count]")).toHaveText("1");
+});
+
+test("cart: checkout needs the terms box, and checkout is a placeholder", async ({ page }) => {
+  await page.goto("/cart.html");
+  await expect(page.locator(".cart-empty")).toContainText("Your cart is empty.");
+  await page.goto("/drone-aerial-planning-guide.html");
+  await page.locator(".buy-box .cart-button").click();
+  await page.goto("/cart.html");
+  const go = page.locator(".cart-checkout");
+  await expect(page.locator(".buy-check")).toContainText("I agree to the Terms of Service and Refund Policy");
+  await expect(page.locator(".buy-check a[href='/terms.html']")).toHaveCount(1);
+  await expect(page.locator(".buy-check a[href='/refunds.html']")).toHaveCount(1);
+  await expect(go).toHaveAttribute("aria-disabled", "true");
+  await expect(go).not.toHaveAttribute("href", /.+/);
+  await expect(page.locator(".buy-hint")).toBeVisible();
+  await page.locator("#cart-agree").check();
+  await expect(go).toHaveAttribute("href", "/checkout.html");
+  await expect(page.locator(".buy-hint")).toBeHidden();
+  await go.click();
+  await expect(page).toHaveURL(/\/checkout\.html$/);
+  await expect(page.locator("[data-checkout-summary] .cart-item")).toContainText("Drone & Aerial Planning Guide");
+  await expect(page.locator("[data-checkout-form]")).toContainText("Checkout is coming soon.");
+  await expect(page.locator("[data-checkout-form] input")).toHaveCount(0);
+  await expect(page.locator("meta[name='robots']")).toHaveAttribute("content", "noindex, nofollow");
 });
 
 test("PDF guide library lists every PDF guide and filters by category", async ({ page }) => {
@@ -82,7 +102,7 @@ test("PDF guide library lists every PDF guide and filters by category", async ({
 test("every internal link and asset on every page resolves", async ({ page, request }) => {
   test.skip(test.info().project.name !== "desktop-chromium", "Run once");
   const seen = new Set();
-  const all = [...PAGES, "/404.html", "/thank-you/portrait-session-guide/", "/field-kit/"];
+  const all = [...PAGES, "/404.html", "/cart.html", "/checkout.html", "/thank-you/portrait-session-guide/", "/field-kit/"];
   for (const p of all) {
     await page.goto(p);
     const refs = await page.evaluate(() => [...document.querySelectorAll("a[href], link[href], script[src], iframe[src]")].map((e) => e.getAttribute("href") || e.getAttribute("src")));
@@ -105,7 +125,7 @@ test("every internal link and asset on every page resolves", async ({ page, requ
 
 test("pages fit narrow screens without sideways scrolling", async ({ page }) => {
   test.skip(test.info().project.name === "desktop-chromium", "Mobile only");
-  for (const p of [...PAGES, "/thank-you/wedding-day-guide/", "/field-kit/"]) {
+  for (const p of [...PAGES, "/cart.html", "/checkout.html", "/thank-you/wedding-day-guide/", "/field-kit/"]) {
     await page.goto(p);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, p).toBeLessThanOrEqual(1);

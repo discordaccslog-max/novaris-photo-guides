@@ -24,6 +24,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <script src="/js/site-config.js" defer></script>
 <script src="/js/products.js" defer></script>
+<script src="/js/cart.js" defer></script>
 <script src="/js/main.js" defer></script>
 </head>
 <body id="top">
@@ -41,6 +42,7 @@
         <li><a href="/contact.html">Contact</a></li>
       </ul>
     </nav>
+    <a class="header-cart" href="/cart.html" aria-label="Cart"><svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg><span>Cart</span><span class="cart-count" data-cart-count hidden>0</span></a>
   </div>
 </header>
 <main id="main">
@@ -52,10 +54,11 @@
     <p class="lede">Licenses, devices, offline use, backups, exports, and refunds. Anything else, email <a href="mailto:buckenovaris@novarisguides.com">buckenovaris@novarisguides.com</a>.</p>
     <nav class="chips" aria-label="FAQ topics">
       <a href="#faq-g0">Buying and delivery</a>
-      <a href="#faq-g1">PDF guides and add-ons</a>
-      <a href="#faq-g2">Licenses and devices</a>
-      <a href="#faq-g3">Using the Field Kit</a>
-      <a href="#faq-g4">Refunds and support</a>
+      <a href="#faq-g1">Cart and checkout</a>
+      <a href="#faq-g2">PDF guides and add-ons</a>
+      <a href="#faq-g3">Licenses and devices</a>
+      <a href="#faq-g4">Using the Field Kit</a>
+      <a href="#faq-g5">Refunds and support</a>
     </nav>
   </header>
   <section aria-labelledby="faq-g0" style="margin-bottom:3.5rem">
@@ -70,8 +73,8 @@
         <div class="faq-answer"><p>Payment is handled at checkout by a third-party payment provider; Novaris Photo Guides never sees your full card details. Prices are shown in US dollars, and applicable taxes are calculated and shown at checkout before you pay.</p></div>
       </details>
       <details class="faq-item">
-        <summary>Why do I have to tick a box before buying?</summary>
-        <div class="faq-answer"><p>Before checkout you confirm that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, so the license terms and the 14-day refund are clear before you pay.</p></div>
+        <summary>Why do I have to tick a box before checkout?</summary>
+        <div class="faq-answer"><p>In your cart, before checkout, you confirm that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, so the license terms and the 14-day refund are clear before you pay.</p></div>
       </details>
       <details class="faq-item">
         <summary>What does the Complete Reference Library include?</summary>
@@ -80,7 +83,24 @@
     </div>
   </section>
   <section aria-labelledby="faq-g1" style="margin-bottom:3.5rem">
-    <h2 id="faq-g1" class="reveal">PDF guides and add-ons</h2>
+    <h2 id="faq-g1" class="reveal">Cart and checkout</h2>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>How do I buy a guide?</summary>
+        <div class="faq-answer"><p>Open the guide's page, choose any add-ons, and select <strong>Add to cart</strong>. You can add several guides, then open your <a href="/cart.html">cart</a>, confirm that you agree to the Terms of Service and Refund Policy, and continue to checkout.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I change add-ons after adding a guide to my cart?</summary>
+        <div class="faq-answer"><p>Yes. Select <strong>Change add-ons</strong> in your cart, tick or untick add-ons on the guide's page, then select <strong>Update cart</strong>.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Is my cart saved?</summary>
+        <div class="faq-answer"><p>Your cart is kept in the browser you're using, on that device, until you check out or remove the items. It isn't sent to us before checkout.</p></div>
+      </details>
+    </div>
+  </section>
+  <section aria-labelledby="faq-g2" style="margin-bottom:3.5rem">
+    <h2 id="faq-g2" class="reveal">PDF guides and add-ons</h2>
     <div class="faq-list reveal">
       <details class="faq-item">
         <summary>What's in a PDF guide?</summary>
@@ -92,7 +112,7 @@
       </details>
       <details class="faq-item">
         <summary>What are add-ons?</summary>
-        <div class="faq-answer"><p>Add-ons are extra PDFs, such as pocket settings cards, planners, questionnaires, and message templates, that you can tick on a guide's page when you buy. The price box shows the total with the add-ons you choose.</p></div>
+        <div class="faq-answer"><p>Add-ons are extra PDFs, such as pocket settings cards, planners, questionnaires, and message templates, that you can tick on a guide's page before you add it to your cart. The price box shows the total with the add-ons you choose.</p></div>
       </details>
       <details class="faq-item">
         <summary>What page size are PDF guides?</summary>
@@ -104,8 +124,8 @@
       </details>
     </div>
   </section>
-  <section aria-labelledby="faq-g2" style="margin-bottom:3.5rem">
-    <h2 id="faq-g2" class="reveal">Licenses and devices</h2>
+  <section aria-labelledby="faq-g3" style="margin-bottom:3.5rem">
+    <h2 id="faq-g3" class="reveal">Licenses and devices</h2>
     <div class="faq-list reveal">
       <details class="faq-item">
         <summary>How do licenses work?</summary>
@@ -129,8 +149,8 @@
       </details>
     </div>
   </section>
-  <section aria-labelledby="faq-g3" style="margin-bottom:3.5rem">
-    <h2 id="faq-g3" class="reveal">Using the Field Kit</h2>
+  <section aria-labelledby="faq-g4" style="margin-bottom:3.5rem">
+    <h2 id="faq-g4" class="reveal">Using the Field Kit</h2>
     <div class="faq-list reveal">
       <details class="faq-item">
         <summary>Does it work offline on location?</summary>
@@ -162,8 +182,8 @@
       </details>
     </div>
   </section>
-  <section aria-labelledby="faq-g4" style="margin-bottom:3.5rem">
-    <h2 id="faq-g4" class="reveal">Refunds and support</h2>
+  <section aria-labelledby="faq-g5" style="margin-bottom:3.5rem">
+    <h2 id="faq-g5" class="reveal">Refunds and support</h2>
     <div class="faq-list reveal">
       <details class="faq-item">
         <summary>What is the refund policy?</summary>

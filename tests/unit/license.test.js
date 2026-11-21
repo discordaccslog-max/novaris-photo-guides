@@ -151,7 +151,6 @@ test("js/products.js matches the license system and fixed prices", () => {
   for (const p of NOVARIS_PRODUCTS) {
     assert.equal(codeForSlug(p.slug), p.productCode, p.slug);
     assert.equal(p.confirmationPath, `/thank-you/${p.slug}/`);
-    assert.equal(typeof p.checkoutUrl, "string");
     assert.equal(p.currency, "USD");
   }
   const prices = Object.fromEntries(NOVARIS_PRODUCTS.map((p) => [p.slug, p.price]));
@@ -169,7 +168,6 @@ test("js/products.js PDF guides have prices and add-ons in range", () => {
     assert.ok(p.price >= 20 && p.price <= 145, p.slug);
     assert.ok(["portraits", "weddings", "commercial", "outdoors", "events"].includes(p.category), p.slug);
     assert.ok(p.options.length >= 3 && p.options.length <= 4, p.slug);
-    assert.equal(p.checkoutUrl, "");
     for (const o of p.options) {
       assert.match(o.id, /^[a-z0-9-]+$/);
       assert.ok(o.price >= 1 && o.price <= 5, o.id);

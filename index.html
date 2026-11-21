@@ -24,6 +24,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <script src="/js/site-config.js" defer></script>
 <script src="/js/products.js" defer></script>
+<script src="/js/cart.js" defer></script>
 <script src="/js/main.js" defer></script>
 </head>
 <body id="top">
@@ -41,6 +42,7 @@
         <li><a href="/contact.html">Contact</a></li>
       </ul>
     </nav>
+    <a class="header-cart" href="/cart.html" aria-label="Cart"><svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg><span>Cart</span><span class="cart-count" data-cart-count hidden>0</span></a>
   </div>
 </header>
 <main id="main">
@@ -547,7 +549,7 @@
     </div>
     <ol class="steps">
       <li class="reveal" style="--stagger:0"><h3>Review the guide</h3><p>Each guide's page shows what it contains, live previews, the price, and who it is and isn't for.</p></li>
-      <li class="reveal" style="--stagger:1"><h3>Agree and pay</h3><p>Tick that you agree to the Terms of Service and Refund Policy, then pay through the payment provider. Applicable taxes are shown at checkout.</p></li>
+      <li class="reveal" style="--stagger:1"><h3>Add to cart and check out</h3><p>Add guides to your cart, with any add-ons, confirm that you agree to the Terms of Service and Refund Policy, then pay at checkout. Applicable taxes are shown at checkout.</p></li>
       <li class="reveal" style="--stagger:2"><h3>Get your guide</h3><p>Field Kit guides: your confirmation page shows your license code and activates it. PDF guides: your download link, with any add-ons, is shown right after payment and emailed to you.</p></li>
       <li class="reveal" style="--stagger:3"><h3>Use it anywhere</h3><p>Enter your Field Kit code on your other devices, or save and print your PDFs. Both work on location without a signal.</p></li>
     </ol>

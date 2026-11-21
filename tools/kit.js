@@ -22,7 +22,6 @@ const PDFS = CATALOG.filter((p) => p.format === "pdf");
 const { NOVARIS_SITE: SITE } = load("js/site-config.js");
 const BASE = SITE.siteUrl.replace(/\/$/, "");
 const DATE = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-const CHECKOUT_READY = CATALOG.every((p) => /^https:\/\//.test(p.checkoutUrl || ""));
 const PHONE = { ...devices["iPhone 13"], locale: "en-US", timezoneId: "America/New_York" };
 const DESKTOP = { viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1, locale: "en-US", timezoneId: "America/New_York" };
 
@@ -178,14 +177,15 @@ async function productFlow(browser, p) {
   await page.goto(cite(`${BASE}/${slug}.html`));
   await settle(page);
   await snap(page, slug, "product-page", "Product page, top: price in USD, the delivery method (instant access with a license), the 14-day refund policy link, and the note that applicable taxes are shown at checkout.");
-  if (CHECKOUT_READY) {
-    const box = page.locator(".buy-box");
-    await box.scrollIntoViewIfNeeded();
-    await snap(page, slug, "checkout-before", "Buy box with the terms checkbox unticked: the buy button is disabled with a note explaining why.");
-    await box.locator(".buy-check input").check();
-    await snap(page, slug, "checkout-after", "Buy box after ticking the terms checkbox: the buy button is enabled and opens the payment provider checkout.");
-    await box.locator(".buy-check input").uncheck();
-  }
+  await page.locator(".buy-box .cart-button").click();
+  await page.goto(cite(`${BASE}/cart.html`));
+  await settle(page);
+  await snap(page, slug, "cart-before", "Cart after Add to cart: the guide and price, the subtotal, and the terms checkbox unticked; Continue to checkout stays disabled with a note explaining why.");
+  await page.locator("#cart-agree").check();
+  await snap(page, slug, "cart-after", "Cart after ticking the terms checkbox: Continue to checkout is enabled.");
+  await page.evaluate(() => localStorage.removeItem("novaris-cart"));
+  await page.goto(cite(`${BASE}/${slug}.html`));
+  await settle(page);
   await snap(page, slug, "product-page-full", "Full product page: contents, live Field Kit previews, who it is for, requirements, and how delivery works.", { fullPage: true });
 
   // 2. Confirmation page (the page buyers are sent to after payment).
@@ -297,16 +297,14 @@ function summaryText(reviewerCodes) {
   for (const p of PDFS) L(`- ${p.name}: $${p.price}, add-ons: ${p.options.map((o) => `${o.name} $${o.price}`).join(", ")} (${cite(BASE + "/" + p.slug + ".html")})`);
   L();
   L("HOW FIELD KIT GUIDES ARE DELIVERED");
-  L(CHECKOUT_READY
-    ? "1. On the product page the buyer ticks a box agreeing to the Terms of Service and Refund Policy, then pays through the payment provider's checkout."
-    : "1. On the product page, the buy button opens the payment provider's checkout after the buyer ticks a required box agreeing to the Terms of Service and Refund Policy. Buy buttons appear on each product page once its checkout link is added.");
+  L("1. On the product page the buyer selects Add to cart. In the cart, the buyer ticks a required box agreeing to the Terms of Service and Refund Policy, then continues to checkout and pays.");
   L(`2. After payment the buyer is taken to the product's confirmation page (for example ${cite(BASE + "/thank-you/portrait-session-guide/")}). It states that the order is complete and the product is delivered, shows the product, date and time, the order reference when the payment provider supplies one, and the license code with a copy button, and it activates the license in that browser automatically. The buyer can save the confirmation as a PDF or print it.`);
   L("3. The Open Field Kit button takes the buyer straight into the purchased guide.");
   L(`4. To use the guide on another device, the buyer opens the Field Kit (${cite(BASE + "/field-kit/")}) and enters the same license code.`);
   L("Delivery is immediate. There is no physical shipment and no shipping charge.");
   L();
   L("HOW PDF GUIDES ARE DELIVERED");
-  L("1. On the product page the buyer ticks any add-ons they want (the price box shows the total), ticks the box agreeing to the Terms of Service and Refund Policy, then pays through the payment provider's checkout. Chosen add-ons are passed to checkout in the link (?addons=...).");
+  L("1. On the product page the buyer ticks any add-ons they want (the price box shows the total) and selects Add to cart. In the cart, the buyer ticks a required box agreeing to the Terms of Service and Refund Policy, then continues to checkout and pays.");
   L("2. Right after payment, the payment provider shows a download link for the guide and every chosen add-on and emails it to the buyer.");
   L(`3. If the email doesn't arrive, the buyer contacts support with the order number and the files are sent again (${cite(BASE + "/delivery.html")}).`);
   L();
@@ -337,9 +335,7 @@ function overviewHtml(summary, reviewerCodes) {
   const ex = "portrait-session-guide";
   const exShots = byProduct(ex);
   const pick = (step) => exShots.filter((s) => s.step === step || s.step.startsWith(step));
-  const checkout = CHECKOUT_READY
-    ? `<p>On each product page, a required checkbox reading “I agree to the Terms of Service and Refund Policy,” with both documents linked, sits above the buy buttons; they stay disabled until it is ticked, then open the payment provider checkout.</p>${pick("checkout").map(figure).join("")}`
-    : `<p>The checkout step is described in writing in this kit. On each product page, buy buttons appear when the product's checkout link is in place. Above them is a required checkbox reading “I agree to the Terms of Service and Refund Policy,” with both documents linked; the buy buttons stay disabled, with a short note explaining why, until it is ticked. The button then opens the payment provider's checkout, where applicable taxes are shown before payment. Screenshots of the buy box are added to this kit when the checkout links are in place.</p>`;
+  const checkout = `<p>Each product page has an Add to cart button. In the cart, a required checkbox reading “I agree to the Terms of Service and Refund Policy,” with both documents linked, sits above Continue to checkout, which stays disabled, with a short note explaining why, until it is ticked.</p>${pick("cart").map(figure).join("")}`;
   return `<!doctype html><html><head><meta charset="utf-8"><title>Fulfillment Overview - Novaris Photo Guides</title>
 <style>
   @page { size: Letter; margin: 16mm 14mm; }
@@ -433,5 +429,5 @@ const page = await browser.newPage();
 await page.setContent(overviewHtml(summary, reviewerCodes), { waitUntil: "load" });
 await page.pdf({ path: path.join(OUT, "Fulfillment-Overview.pdf"), format: "Letter", printBackground: true });
 await browser.close();
-console.log(`Done: ${shots.length} screenshots, ${urlsCited.size} URLs verified. Checkout screenshots: ${CHECKOUT_READY ? "included" : "not included (checkout links are empty)"}.`);
+console.log(`Done: ${shots.length} screenshots, ${urlsCited.size} URLs verified.`);
 console.log("Reviewer codes:\n" + PRODUCTS.map((p) => `  ${p.name}: ${reviewerCodes[p.slug]}`).join("\n"));

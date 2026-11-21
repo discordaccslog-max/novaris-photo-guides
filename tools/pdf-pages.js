@@ -147,7 +147,7 @@ export function pdfProductPage(p, guide, ctx) {
     <ul class="addons reveal">
 ${addons}
     </ul>
-    <p class="muted small">Add-ons are chosen when you buy the guide.</p>
+    <p class="muted small">Choose add-ons before you add the guide to your cart. You can change them later from your cart.</p>
   </div>
 </section>
 

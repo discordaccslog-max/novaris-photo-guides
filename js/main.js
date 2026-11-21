@@ -20,12 +20,6 @@
     return "$" + (n % 1 === 0 ? n.toFixed(0) : n.toFixed(2));
   }
 
-  function validCheckoutUrl(url) {
-    if (typeof url !== "string") return "";
-    var trimmed = url.trim();
-    return /^https?:\/\//i.test(trimmed) ? trimmed : "";
-  }
-
   document.querySelectorAll("[data-product]").forEach(function (scope) {
     var product = findProduct(scope.getAttribute("data-product"));
     if (!product) return;
@@ -38,108 +32,75 @@
     });
 
     /*
-      Buy buttons appear only when checkoutUrl is filled in. Each one sits
-      under a terms checkbox and stays disabled until the box is ticked.
+      Add to cart (js/cart.js). Ticked add-ons raise the shown total and are
+      saved with the product; prices come from product.options. The terms
+      checkbox and payment happen in the cart and at checkout.
     */
-    var url = validCheckoutUrl(product.checkoutUrl);
+    var cart = window.NOVARIS_CART;
     var slots = scope.querySelectorAll("[data-buy]");
-    var boxes = [];
-    var links = [];
-    var hints = [];
-
-    /*
-      PDF guides: ticked add-ons raise the shown total and are passed to
-      checkout as ?addons=id1,id2 (prices come from product.options).
-    */
+    if (!cart || !slots.length) return;
     var options = Array.isArray(product.options) ? product.options : [];
     var addonBoxes = Array.prototype.slice.call(scope.querySelectorAll("[data-addon]"));
-    function selectedAddons() {
-      return addonBoxes.filter(function (b) { return b.checked; }).map(function (b) {
-        for (var i = 0; i < options.length; i++) if (options[i].id === b.value) return options[i];
-        return null;
-      }).filter(Boolean);
+    var buttons = [];
+    var notes = [];
+
+    function selectedIds() {
+      return addonBoxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
     }
     function total() {
-      return selectedAddons().reduce(function (sum, o) { return sum + Number(o.price); }, Number(product.price));
+      return options.filter(function (o) { return selectedIds().indexOf(o.id) !== -1; })
+        .reduce(function (sum, o) { return sum + Number(o.price); }, Number(product.price));
     }
-    function buyUrl() {
-      var ids = selectedAddons().map(function (o) { return o.id; });
-      if (!ids.length) return url;
-      return url + (url.indexOf("?") === -1 ? "?" : "&") + "addons=" + encodeURIComponent(ids.join(","));
+    function matchesCart() {
+      var line = cart.get(product.id);
+      if (!line) return false;
+      var ids = selectedIds();
+      return ids.length === line.addons.length && ids.every(function (id) { return line.addons.indexOf(id) !== -1; });
     }
-    function buyText() {
-      var n = selectedAddons().length;
-      return "Buy " + product.name + (n ? " + " + n + (n === 1 ? " add-on" : " add-ons") : "") + " — " + formatPrice(total());
-    }
-    function refreshTotal() {
+    function refresh() {
+      var inCart = !!cart.get(product.id);
+      var same = matchesCart();
+      var n = selectedIds().length;
+      var label = !inCart ? "Add to cart" : same ? "View cart" : "Update cart";
       scope.querySelectorAll("[data-total]").forEach(function (el) { el.textContent = formatPrice(total()); });
-      links.forEach(function (link) {
-        link.textContent = buyText();
-        if (link.hasAttribute("href")) link.href = buyUrl();
+      buttons.forEach(function (b) {
+        b.textContent = same ? label : label + (n ? " with " + n + (n === 1 ? " add-on" : " add-ons") : "") + " — " + formatPrice(total());
+        b.classList.toggle("btn-ghost", same);
+        b.classList.toggle("btn-primary", !same);
+      });
+      notes.forEach(function (note) {
+        note.hidden = !inCart;
+        note.textContent = !inCart ? "" : same ? "In your cart." : "In your cart with different add-ons. Update to save your changes.";
       });
     }
-    addonBoxes.forEach(function (b) { b.addEventListener("change", refreshTotal); });
 
-    function setAgreed(agreed) {
-      boxes.forEach(function (b) { b.checked = agreed; });
-      links.forEach(function (link) {
-        if (agreed) {
-          link.href = buyUrl();
-          link.removeAttribute("aria-disabled");
-          link.classList.remove("is-disabled");
-        } else {
-          link.removeAttribute("href");
-          link.setAttribute("aria-disabled", "true");
-          link.classList.add("is-disabled");
-        }
-      });
-      hints.forEach(function (h) { h.hidden = agreed; });
-    }
-    slots.forEach(function (slot, i) {
+    /* Start from what's already in the cart. */
+    var saved = cart.get(product.id);
+    if (saved) addonBoxes.forEach(function (b) { b.checked = saved.addons.indexOf(b.value) !== -1; });
+
+    slots.forEach(function (slot) {
       slot.textContent = "";
-      if (!url) return;
-      var id = "agree-" + product.slug + "-" + i;
-      var hintId = id + "-hint";
       var wrap = document.createElement("div");
-      wrap.className = "buy-agree";
-      var label = document.createElement("label");
-      label.className = "buy-check";
-      label.setAttribute("for", id);
-      var box = document.createElement("input");
-      box.type = "checkbox";
-      box.id = id;
-      box.setAttribute("aria-describedby", hintId);
-      label.appendChild(box);
-      var text = document.createElement("span");
-      text.innerHTML = 'I agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>';
-      label.appendChild(text);
-      var link = document.createElement("a");
-      link.className = "btn btn-primary buy-button";
-      link.rel = "noopener";
-      link.setAttribute("role", "link");
-      link.tabIndex = 0;
-      link.textContent = buyText();
-      var hint = document.createElement("p");
-      hint.className = "buy-hint";
-      hint.id = hintId;
-      hint.textContent = "Tick the box to agree to the Terms of Service and Refund Policy before continuing to checkout.";
-      link.addEventListener("click", function (event) {
-        if (!box.checked) {
-          event.preventDefault();
-          box.focus();
-        }
+      wrap.className = "buy-cart";
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "btn btn-primary cart-button";
+      button.addEventListener("click", function () {
+        if (matchesCart()) { window.location.href = "/cart.html"; return; }
+        cart.set(product.id, selectedIds());
       });
-      box.addEventListener("change", function () { setAgreed(box.checked); });
-      wrap.appendChild(label);
-      wrap.appendChild(link);
-      wrap.appendChild(hint);
+      var note = document.createElement("p");
+      note.className = "cart-status";
+      note.setAttribute("role", "status");
+      wrap.appendChild(button);
+      wrap.appendChild(note);
       slot.appendChild(wrap);
-      boxes.push(box);
-      links.push(link);
-      hints.push(hint);
+      buttons.push(button);
+      notes.push(note);
     });
-    if (url) setAgreed(false);
-    refreshTotal();
+    addonBoxes.forEach(function (b) { b.addEventListener("change", refresh); });
+    cart.onChange(refresh);
+    refresh();
   });
 
   /* ---------- PDF library: category filter chips ---------- */

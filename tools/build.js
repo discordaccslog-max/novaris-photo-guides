@@ -62,6 +62,7 @@ ${canonical && !noindex ? `<meta property="og:url" content="${canonical}">\n` : 
 <script>document.documentElement.classList.add("js");</script>
 <script src="/js/site-config.js" defer></script>
 <script src="/js/products.js" defer></script>
+<script src="/js/cart.js" defer></script>
 <script src="/js/main.js" defer></script>
 </head>`;
 }
@@ -78,6 +79,7 @@ function header(current) {
 ${NAV.map(([href, label, key]) => `        <li><a href="${href}"${key === current ? ' aria-current="page"' : ""}>${label}</a></li>`).join("\n")}
       </ul>
     </nav>
+    <a class="header-cart" href="/cart.html" aria-label="Cart"${current === "cart" ? ' aria-current="page"' : ""}>${S.icons.cart}<span>Cart</span><span class="cart-count" data-cart-count hidden>0</span></a>
   </div>
 </header>`;
 }
@@ -299,7 +301,7 @@ ${MATRIX.map(([slug, name, c]) => `          <tr><th scope="row"><a href="/${slu
     </div>
     <ol class="steps">
       <li class="reveal" style="--stagger:0"><h3>Review the guide</h3><p>Each guide's page shows what it contains, live previews, the price, and who it is and isn't for.</p></li>
-      <li class="reveal" style="--stagger:1"><h3>Agree and pay</h3><p>Tick that you agree to the Terms of Service and Refund Policy, then pay through the payment provider. Applicable taxes are shown at checkout.</p></li>
+      <li class="reveal" style="--stagger:1"><h3>Add to cart and check out</h3><p>Add guides to your cart, with any add-ons, confirm that you agree to the Terms of Service and Refund Policy, then pay at checkout. Applicable taxes are shown at checkout.</p></li>
       <li class="reveal" style="--stagger:2"><h3>Get your guide</h3><p>Field Kit guides: your confirmation page shows your license code and activates it. PDF guides: your download link, with any add-ons, is shown right after payment and emailed to you.</p></li>
       <li class="reveal" style="--stagger:3"><h3>Use it anywhere</h3><p>Enter your Field Kit code on your other devices, or save and print your PDFs. Both work on location without a signal.</p></li>
     </ol>
@@ -538,13 +540,18 @@ const faqGroups = [
   ["Buying and delivery", [
     ["What do I receive after I buy a Field Kit guide?", `<p>As soon as payment is complete, you're shown a confirmation page. It shows your product, the date and time, your order reference when the payment provider supplies one, and your license code. The code is activated automatically in that browser, and the <strong>Open Field Kit</strong> button takes you straight into your guide. You can save the confirmation as a PDF or print it. Nothing is shipped. See the <a href="/delivery.html">Delivery Policy</a>.</p>`],
     ["Who handles payment, and are taxes included?", `<p>Payment is handled at checkout by a third-party payment provider; Novaris Photo Guides never sees your full card details. Prices are shown in US dollars, and applicable taxes are calculated and shown at checkout before you pay.</p>`],
-    ["Why do I have to tick a box before buying?", `<p>Before checkout you confirm that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, so the license terms and the 14-day refund are clear before you pay.</p>`],
+    ["Why do I have to tick a box before checkout?", `<p>In your cart, before checkout, you confirm that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, so the license terms and the 14-day refund are clear before you pay.</p>`],
     ["What does the Complete Reference Library include?", `<p>All five guides: Portrait Session, Wedding Day, Product Photography, Landscape &amp; Travel Field, and Event Coverage. One license code unlocks all of them in the Field Kit.</p>`]
+  ]],
+  ["Cart and checkout", [
+    ["How do I buy a guide?", `<p>Open the guide's page, choose any add-ons, and select <strong>Add to cart</strong>. You can add several guides, then open your <a href="/cart.html">cart</a>, confirm that you agree to the Terms of Service and Refund Policy, and continue to checkout.</p>`],
+    ["Can I change add-ons after adding a guide to my cart?", `<p>Yes. Select <strong>Change add-ons</strong> in your cart, tick or untick add-ons on the guide's page, then select <strong>Update cart</strong>.</p>`],
+    ["Is my cart saved?", `<p>Your cart is kept in the browser you're using, on that device, until you check out or remove the items. It isn't sent to us before checkout.</p>`]
   ]],
   ["PDF guides and add-ons", [
     ["What's in a PDF guide?", `<p>Each PDF guide is a printable reference for one kind of photography: shot lists with tick boxes, overhead lighting or position diagrams, settings tables, planning worksheets, and checklists. Each guide's page lists every section and shows excerpts before you buy.</p>`],
     ["How do I receive a PDF guide?", `<p>Right after payment, your download link is shown on the checkout confirmation and sent to the email address you used at checkout. Any add-ons you chose are delivered with the guide. See the <a href="/delivery.html">Delivery Policy</a>.</p>`],
-    ["What are add-ons?", `<p>Add-ons are extra PDFs, such as pocket settings cards, planners, questionnaires, and message templates, that you can tick on a guide's page when you buy. The price box shows the total with the add-ons you choose.</p>`],
+    ["What are add-ons?", `<p>Add-ons are extra PDFs, such as pocket settings cards, planners, questionnaires, and message templates, that you can tick on a guide's page before you add it to your cart. The price box shows the total with the add-ons you choose.</p>`],
     ["What page size are PDF guides?", `<p>US Letter (8.5 × 11 in). They print on A4 using "fit to page." Pocket card add-ons are 4 × 6 in. The Wedding &amp; Portrait Pro Bundle has an add-on with A4 editions of every guide.</p>`],
     ["Can I print PDF guides and share worksheets with clients?", `<p>Yes. You can print them as often as you need for your own work and share client worksheets and questionnaires with your own clients. Please don't share or resell the files themselves. See the <a href="/terms.html">Terms of Service</a>.</p>`]
   ]],
@@ -818,7 +825,7 @@ function delivery() {
 
     <h2>Field Kit guides: how delivery works</h2>
     <ol>
-      <li><strong>Agree and pay.</strong> On the guide's page, you tick that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, then pay through the payment provider's checkout.</li>
+      <li><strong>Add to cart and pay.</strong> Add the guide to your cart. In your cart, you tick that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, then pay at checkout.</li>
       <li><strong>Confirmation page.</strong> As soon as payment is complete, you're shown a confirmation page. It states that your order is complete, shows your product, the date and time, your order reference when the payment provider supplies one, and your license code, and it activates the license in that browser automatically. You can save the confirmation as a PDF or print it.</li>
       <li><strong>Open your guide.</strong> The Open Field Kit button takes you straight into your guide in the Novaris Field Kit.</li>
       <li><strong>Other devices.</strong> To use your guide on another phone, tablet, or computer, open the <a href="/field-kit/">Field Kit</a> there and enter the same license code.</li>
@@ -826,7 +833,7 @@ function delivery() {
 
     <h2>PDF guides: how delivery works</h2>
     <ol>
-      <li><strong>Choose and pay.</strong> On the guide's page, tick any add-ons you want, tick that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, then pay through the payment provider's checkout.</li>
+      <li><strong>Choose and pay.</strong> On the guide's page, tick any add-ons you want and add the guide to your cart. In your cart, tick that you agree to the <a href="/terms.html">Terms of Service</a> and <a href="/refunds.html">Refund Policy</a>, then pay at checkout.</li>
       <li><strong>Download.</strong> As soon as payment is complete, your download link is shown on the checkout confirmation and sent to the email address you entered at checkout. It includes the guide and every add-on you chose.</li>
       <li><strong>Keep your files.</strong> Save the PDFs to your devices. They open in any PDF viewer and work without a connection.</li>
     </ol>
@@ -917,6 +924,56 @@ function consumerRights() {
   });
 }
 
+function cartPage() {
+  const body = `
+<div class="wrap narrow">
+  <header class="page-head">
+    <span class="eyebrow">Cart</span>
+    <h1>Your cart</h1>
+  </header>
+  <div class="cart" data-cart-page>
+    <p class="muted">Loading your cart…</p>
+    <noscript><p>Your cart needs JavaScript. Please turn it on to continue.</p></noscript>
+  </div>
+</div>
+<div class="section" aria-hidden="true" style="padding-top:0"></div>`;
+  write("cart.html", pageDoc({ title: "Your cart | Novaris Photo Guides", desc: "Review the guides and add-ons in your cart before checkout.", url: "/cart.html", current: "cart", body, noindex: true }));
+}
+
+/*
+  Checkout is a placeholder until the custom checkout form and payment method
+  are built. The order comes from window.NOVARIS_CART.items() (js/cart.js).
+*/
+function checkoutPage() {
+  const body = `
+<div class="wrap narrow">
+  <header class="page-head">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol><li><a href="/cart.html">Cart</a></li><li aria-current="page">Checkout</li></ol>
+    </nav>
+    <span class="eyebrow">Checkout</span>
+    <h1>Checkout</h1>
+  </header>
+  <div class="checkout-layout">
+    <section aria-labelledby="summary-title">
+      <h2 id="summary-title" class="checkout-heading">Order summary</h2>
+      <div data-checkout-summary><p class="muted">Loading your order…</p></div>
+    </section>
+    <section class="checkout-form" aria-labelledby="payment-title" data-checkout-ready hidden>
+      <h2 id="payment-title" class="checkout-heading">Payment</h2>
+      <!-- Placeholder: the custom checkout form and payment method go here. -->
+      <div class="checkout-placeholder" data-checkout-form>
+        <p><strong>Checkout is coming soon.</strong></p>
+        <p>Payment isn't available yet, so no order can be placed and nothing will be charged. Your cart stays saved in this browser.</p>
+      </div>
+      <p class="muted small">Questions? Write to ${MAIL}.</p>
+    </section>
+  </div>
+</div>
+<div class="section" aria-hidden="true" style="padding-top:0"></div>`;
+  write("checkout.html", pageDoc({ title: "Checkout | Novaris Photo Guides", desc: "Checkout for Novaris Photo Guides.", url: "/checkout.html", current: "cart", body, noindex: true }));
+}
+
 function notFound() {
   const body = `
 <div class="wrap notfound">
@@ -993,6 +1050,7 @@ const bundleGuides = [
   ...["engagement-session-guide", "elopement-small-wedding-guide", "newborn-baby-session-guide", "maternity-portrait-guide", "large-group-reunion-guide"].map((slug) => { const q = PDFS.find((x) => x.slug === slug); return { name: q.name, href: "/" + slug + ".html", text: q.short }; })
 ];
 PDFS.forEach((p) => pdfProductPage(p, CONTENT[p.slug], { pageDoc, write, PRODUCTS, MAIL, extra: p.slug === "wedding-portrait-pro-bundle" ? { bundleGuides, bundlePreviews: ["engagement-session-guide", "newborn-baby-session-guide", "large-group-reunion-guide"].map((slug, k) => previews(CONTENT[slug])[k % 2]) } : {} }));
+cartPage(); checkoutPage();
 about(); faq(); contact(); terms(); privacy(); refunds(); delivery(); disclaimer(); consumerRights(); notFound();
 FIELD_KIT.forEach(thankYou);
 

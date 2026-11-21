@@ -1,19 +1,17 @@
 /*
   Novaris Photo Guides — product catalog.
 
-  Product pages read names and prices from this file and render their buy
-  buttons from checkoutUrl. While checkoutUrl is an empty string, no buy
-  button (and no terms checkbox) is shown. Paste a full https:// checkout
-  link into checkoutUrl and the button appears on that product's page.
+  Product pages, the cart (js/cart.js), and the checkout read names, prices,
+  and add-ons from this file. Every product page has an Add to cart button;
+  the cart is kept in the buyer's browser until checkout.
 
-  After payment, set the payment provider's success URL to the product's
-  confirmationPath on the live site, adding the provider's order or session
-  ID as a query parameter (for example ?session_id=...). The confirmation
-  page then issues the same license code for that order every time.
+  Field Kit products (no format) unlock with a license code. After payment,
+  send the buyer to the product's confirmationPath, adding the order ID as a
+  query parameter (for example ?order_id=...). The confirmation page then
+  issues the same license code for that order every time.
 
-  Products with format "pdf" are printable PDF guides with optional add-ons.
-  When a buyer ticks add-ons, the buy button adds their ids to the checkout
-  link as ?addons=id1,id2 (see README for setting up add-ons with your provider).
+  Products with format "pdf" are printable PDF guides. Their options are
+  add-ons the buyer can tick before adding the guide to the cart.
 
   Prices are in US dollars.
 */
@@ -27,8 +25,7 @@ window.NOVARIS_PRODUCTS = [
     currency: "USD",
     short: "Interactive shot lists for headshot, family, and couples sessions, tap-to-explain lighting diagrams, illustrated posing references, a settings reference with exposure calculator, session planning sheets, and a client questionnaire.",
     description: "A browser-based field guide for portrait sessions, built for use on a phone during the shoot.",
-    confirmationPath: "/thank-you/portrait-session-guide/",
-    checkoutUrl: ""
+    confirmationPath: "/thank-you/portrait-session-guide/"
   },
   {
     id: "wedding-day-guide",
@@ -39,8 +36,7 @@ window.NOVARIS_PRODUCTS = [
     currency: "USD",
     short: "A full-day shot list by phase, an editable wedding timeline, a family formals grouping planner, a venue scouting worksheet, a gear checklist, a client questionnaire, and a settings reference with exposure calculator.",
     description: "A browser-based field guide for covering a wedding day from preparation to reception.",
-    confirmationPath: "/thank-you/wedding-day-guide/",
-    checkoutUrl: ""
+    confirmationPath: "/thank-you/wedding-day-guide/"
   },
   {
     id: "product-photography-guide",
@@ -51,8 +47,7 @@ window.NOVARIS_PRODUCTS = [
     currency: "USD",
     short: "Tap-to-explain tabletop lighting diagrams, a background and surface reference, shot lists for standard e-commerce angles, and settings charts with an exposure calculator.",
     description: "A browser-based field guide for tabletop product photography.",
-    confirmationPath: "/thank-you/product-photography-guide/",
-    checkoutUrl: ""
+    confirmationPath: "/thank-you/product-photography-guide/"
   },
   {
     id: "landscape-travel-field-guide",
@@ -63,8 +58,7 @@ window.NOVARIS_PRODUCTS = [
     currency: "USD",
     short: "A sunrise, sunset, golden and blue hour planner, location scouting worksheets, a composition reference, field settings with an exposure and filter calculator, a gear checklist, and a printable pocket card.",
     description: "A browser-based field guide for landscape and travel photography.",
-    confirmationPath: "/thank-you/landscape-travel-field-guide/",
-    checkoutUrl: ""
+    confirmationPath: "/thank-you/landscape-travel-field-guide/"
   },
   {
     id: "event-coverage-guide",
@@ -75,8 +69,7 @@ window.NOVARIS_PRODUCTS = [
     currency: "USD",
     short: "Interactive shot lists for corporate events, parties, and conferences, tap-to-explain flash setups, a low-light settings reference with exposure calculator, and run-of-show planning sheets.",
     description: "A browser-based field guide for covering corporate events, parties, and conferences.",
-    confirmationPath: "/thank-you/event-coverage-guide/",
-    checkoutUrl: ""
+    confirmationPath: "/thank-you/event-coverage-guide/"
   },
   {
     id: "complete-reference-library",
@@ -87,8 +80,7 @@ window.NOVARIS_PRODUCTS = [
     currency: "USD",
     short: "All five field guides unlocked by a single license: Portrait Session, Wedding Day, Product Photography, Landscape & Travel Field, and Event Coverage.",
     description: "All five Novaris field guides, unlocked together with one license code.",
-    confirmationPath: "/thank-you/complete-reference-library/",
-    checkoutUrl: ""
+    confirmationPath: "/thank-you/complete-reference-library/"
   },
   {
     id: "seasonal-mini-sessions-guide",
@@ -116,8 +108,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Client reminder message templates",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "street-photography-field-guide",
@@ -145,8 +136,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Photo walk route planner",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "large-group-reunion-guide",
@@ -174,8 +164,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Outdoor reflector setup card",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "pet-photography-guide",
@@ -208,8 +197,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Studio pet setup diagrams",
         price: 3
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "macro-close-up-guide",
@@ -237,8 +225,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Diffuser setup cards",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "engagement-session-guide",
@@ -271,8 +258,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Outfit planning sheet",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "maternity-portrait-guide",
@@ -300,8 +286,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Golden hour location worksheet",
         price: 3
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "concert-live-music-guide",
@@ -329,8 +314,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Set-list shot planner",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "video-b-roll-shot-list-guide",
@@ -363,8 +347,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Edit log template",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "newborn-baby-session-guide",
@@ -397,8 +380,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Prop and wrap planning sheet",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "astrophotography-night-sky-guide",
@@ -431,8 +413,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Dark-site scouting form",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "food-photography-guide",
@@ -460,8 +441,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Overhead rig planning sheet",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "wildlife-bird-photography-guide",
@@ -494,8 +474,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Shutter and ISO pocket card",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "headshot-corporate-team-guide",
@@ -528,8 +507,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Multi-location setup cards",
         price: 4
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "real-estate-interiors-guide",
@@ -562,8 +540,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Homeowner property prep checklist",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "elopement-small-wedding-guide",
@@ -596,8 +573,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Weather backup planner",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "sports-action-guide",
@@ -630,8 +606,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Season planning calendar",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "automotive-photography-guide",
@@ -659,8 +634,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Detail shot list",
         price: 2
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "architecture-photography-guide",
@@ -688,8 +662,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Interior bracketing sheet",
         price: 3
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "drone-aerial-planning-guide",
@@ -722,8 +695,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Battery and flight log",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "brand-content-photography-guide",
@@ -756,8 +728,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Image usage notes template",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "fashion-lookbook-guide",
@@ -790,8 +761,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Strobe lighting setup cards",
         price: 4
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "studio-lighting-setups-library",
@@ -824,8 +794,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Background setup diagrams",
         price: 4
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "client-workflow-kit",
@@ -858,8 +827,7 @@ window.NOVARIS_PRODUCTS = [
         name: "Gallery delivery checklist",
         price: 1
       }
-    ],
-    checkoutUrl: ""
+    ]
   },
   {
     id: "wedding-portrait-pro-bundle",
@@ -892,7 +860,6 @@ window.NOVARIS_PRODUCTS = [
         name: "A4 and US Letter print editions",
         price: 4
       }
-    ],
-    checkoutUrl: ""
+    ]
   }
 ];
